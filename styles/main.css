@@ -24,6 +24,7 @@ main, #messages-card {
 #messages-card-container {
   height: calc(100% - 35px);
   padding-bottom: 0;
+  float: left;
 }
 #messages-card {
   margin-top: 15px;
@@ -52,11 +53,12 @@ main, #messages-card {
   padding-bottom: 0;
 }
 #messages {
-  overflow-y: auto;
+  overflow-y: scroll;
   margin-bottom: 10px;
   height: calc(100% - 80px);
   display: flex;
   flex-direction: column;
+  max-height: 500px;
 }
 #message-filler {
   flex-grow: 1;
@@ -101,6 +103,7 @@ main, #messages-card {
   font-size: 12px;
   box-sizing: border-box;
 }
+
 #message-form {
   display: flex;
   flex-direction: row;
@@ -111,15 +114,23 @@ main, #messages-card {
   display: flex;
   flex-direction: row;
   width: 48px;
-  float: right;
+  float:right;
+
+}
+#file-form {
+  display: flex;
+  flex-direction: row;
+  width: 48px;
+  float:right;
 }
 #message-form .mdl-textfield {
   width: calc(100% - 100px);
 }
-#message-form button, #image-form button {
-  width: 100px;
+#message-form button, #image-form button, #file-form button{
+  width: 50px;
   margin: 15px 0 0 10px;
 }
+
 .mdl-card {
   min-height: 0;
 }
@@ -163,12 +174,24 @@ main, #messages-card {
 #image-form #submitImage .material-icons {
   top: -1px;
 }
+#file-form #submitImage {
+  width: auto;
+  padding: 0 6px 0 1px;
+  min-width: 0;
+}
+#file-form #submitImage .material-icons {
+  top: -1px;
+}
 .message img {
   max-width: 300px;
   max-height: 200px;
 }
 #mediaCapture {
   display: none;
+}
+#fileCapture {
+  display: none;
+}
 }
 @media screen and (max-width: 610px) {
   header {

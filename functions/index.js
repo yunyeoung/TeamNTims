@@ -23,3 +23,5 @@
 // TODO(DEVELOPER): Write the blurOffensiveImages Function here.
 
 // TODO(DEVELOPER): Write the sendNotifications Function here.
+
+const functions = require('firebase-functions');

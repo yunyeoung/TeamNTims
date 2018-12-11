@@ -3,15 +3,21 @@
     "messages": {
       ".read": true,
       ".write": "auth !== null",
-      "$messageId": {
-        ".validate": "newData.child('name').val() === auth.token.name",
-        "text": {
-          ".validate": "newData.isString() && newData.val().length < 300"
+      "$roomId" : {
+        "$messageId": {
+          ".validate": "newData.child('name').val() === auth.token.name",
+          "text": {
+            ".validate": "newData.isString() && newData.val().length < 300"
+          }
         }
       }
     },
     "fcmTokens": {
       ".read": false,
+      ".write": true
+    },
+    "users" : {
+      ".read" : true,
       ".write": true
     }
   }

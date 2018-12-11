@@ -19,7 +19,73 @@
 function signIn() {
   // Sign in Firebase using popup auth and Google as the identity provider.
   var provider = new firebase.auth.GoogleAuthProvider();
-  firebase.auth().signInWithPopup(provider);
+  firebase.auth().signInWithPopup(provider).then(function(){
+    saveUserAtRealDB(); //참고한 코드에는 indexedDB에 먼저 저장했지만 indexedDB오류때문에 일단 건너뛸것.
+    //로그인 할때마다 저장하는것,,,?
+  });
+
+}
+
+//user data를 IndexDB에 저장 및 데이터 변경 saveuseratrealdb호출하여 realdb에 저장
+function saveUserAtIndexDB(userName, isSave){
+  var user = firebase.auth().currentUser;
+  if(indexedDB){
+    var request = indexedDB.open(INDEXDB_DB_NAME, INDEXDB_VERSION); //데이터베이스 접근 요청
+    var objectName = INDEXDB_STORE;
+    request.onupgradeneeded = function(){ //데이터베이스 생성 또는 버전 업그레이드 시 수행
+      var db = request.result; //데이터베이스 객체
+      var store = db.createObjectStore(objectName, {keyPath : "uid"}); //테이블에 해당하는 object생성 및 키값 설정
+    }
+    request.onsuccess = function(){ //데이터베이스 접근 요청 성공
+      var db = request.result;
+      var tx = db.transaction(objectName, 'readwrite'); //읽기쓰기 권한으로 트랜잭션 얻음
+      //39줄 여기서 오류가 난다...
+      var store = tx.objectStore(objectName);
+
+      store.get(user.uid).onsuccess = function(event){ //user.uid기준으로 indexedDB데이터 가져옴
+        var data = event.target.result;
+        if(!data){ //데이터 없으면 저장
+          store.put({
+            uid : user.uid,
+            email : user.email,
+            photoURL : user.photoURL ? user.photoURL : '',
+            displayName : userName ? username: user.displayName,
+            isSave : false
+          }).then(saveUserAtRealDB());
+        }
+
+        if(data && isSave){ // 데이터 있고 isSave파라미터가 true이면 데이터 업데이트
+          store.put({
+            uid: user.uid,
+            email: user.email,
+            photoURL: user.photoURL ? user.photoURL: '',
+            displayName: userName ? userName: user.displayName,
+            isSave: true
+          });
+        }
+
+      }
+      tx.oncompleete = function(){
+        db.close();
+      }
+    }
+  }
+}
+
+//realtime database에 user 데이터 체크 후 저장
+//userdata 한개만 생기기는 하는데 로그인 할때마다 적는다.
+function saveUserAtRealDB(){
+  var database = firebase.database(); //database reference
+  var useruid = firebase.auth().currentUser.uid; //get current user uid
+  var userRef = firebase.database().ref('/users/'+useruid); //database reference where save user data
+  return userRef.set({
+    useruid: useruid,
+    name: getUserName(),
+    email: getUserEmail(),
+    profilePicUrl: getProfilePicUrl()
+    }).catch(function(error) {
+    console.error('Error writing new user to Firebase Database', error);
+  });
 }
 
 // Signs-out of Friendly Chat.
@@ -39,6 +105,11 @@ function getProfilePicUrl() {
   return firebase.auth().currentUser.photoURL || '/images/profile_placeholder.png';
 }
 
+//Return the signed-in user's email
+function getUserEmail(){
+  return firebase.auth().currentUser.email;
+}
+
 // Returns the signed-in user's display name.
 function getUserName() {
   return firebase.auth().currentUser.displayName;
@@ -50,21 +121,61 @@ function isUserSignedIn() {
 }
 
 // Loads chat messages history and listens for upcoming ones.
-function loadMessages() {
-  // Loads the last 12 messages and listen for new ones.
-  var callback = function(snap) {
-    var data = snap.val();
-    displayMessage(snap.key, data.name, data.text, data.profilePicUrl, data.imageUrl);
-  };
+function loadMessages(roomId) {
+  console.log(roomId);
+  if(roomId){
+    // messageListElement.innerHTML = ''; //메세지 화면 리셋
+    // Loads the messages and listen for new ones.
+    var callback = function(snap) {
+      var data = snap.val();
+      console.log(snap.key);
+      console.log(data.name);
+      displayMessage(snap.key, data.name, data.text, data.profilePicUrl, data.imageUrl, data.fileUrl, data.filename);
+    };
 
-  firebase.database().ref('/messages/').limitToLast(12).on('child_added', callback);
-  firebase.database().ref('/messages/').limitToLast(12).on('child_changed', callback);
+    firebase.database().ref('/messages/').child(roomId).on('child_added', callback); //데이터베이스에 새로운 데이터 생기거나
+    firebase.database().ref('/messages/').child(roomId).on('child_changed', callback); //변하는 것 가져와서 모든 대화 출력
+  }
+}
+
+// Loads user list and listens for upcoming ones.
+function loadUserList(){
+  var callback = function(snap){
+    var data = snap.val();
+    displayUser(snap.key, data.name, data.profilePicUrl, data.email);
+
+    var arrList = userListElement.getElementsByClassName("user-container");
+    var arrLen = arrList.length;
+    console.log(arrLen);
+    for(var i=0; i<arrLen;i++){
+      arrList[i].addEventListener('click', onUserListClick(arrList[i]), false); //여기가 뭔가 잘못됨. 클릭은 안되고 무조건 클릭으로 들어감.
+      // arrList[i].onclick = onUserListClick(arrList[i]); 이거도 똑같다.
+    };
+  }
+  firebase.database().ref('/users/').on('child_added', callback);
+  firebase.database().ref('/users/').on('child_changed', callback);
+}
+
+function loadChatList(){
+  var callback = function(snap){
+    var data = snap.val();
+    displayChatRoom(snap.key);
+
+    //var arrList = chatListElement.getelementsByClassName("chat-list-container");
+    //var arrLen = arrLisg.length;
+    //for(var i=0; i<arrLen; i++){
+    //  arrList[i].addEventListener('click', onChatListClick(arrList[i]), false);
+    //}
+  }
+  firebase.database().ref('/messages/').on('child_added', callback);
+  firebase.database().ref('/messages/').on('child_changed', callback);
 }
 
 // Saves a new message on the Firebase DB.
 function saveMessage(messageText) {
+  var roomId = roomNameElement.innerHTML;
   // Add a new message entry to the Firebase Database.
-  return firebase.database().ref('/messages/').push({
+  return firebase.database().ref('/messages/' + roomId).push({
     name: getUserName(),
     text: messageText,
     profilePicUrl: getProfilePicUrl()
@@ -76,8 +187,9 @@ function saveMessage(messageText) {
 // Saves a new message containing an image in Firebase.
 // This first saves the image in Firebase storage.
 function saveImageMessage(file) {
+  var roomId = roomNameElement.innerHTML;
   // 1 - We add a message with a loading icon that will get updated with the shared image.
-  firebase.database().ref('/messages/').push({
+  firebase.database().ref('/messages/'+ roomId).push({
     name: getUserName(),
     imageUrl: LOADING_IMAGE_URL,
     profilePicUrl: getProfilePicUrl()
@@ -98,6 +210,35 @@ function saveImageMessage(file) {
     console.error('there was an error uploading a file to Cloud Storage', error);
   });
 }
+
+// Saves a new message containing an image in Firebase.
+// This first saves the image in Firebase storage.
+function saveFileMessage(file) {
+  var roomId = roomNameElement.innerHTML;
+  // 1 - We add a message with a loading icon that will get updated with the shared image.
+  firebase.database().ref('/messages/' + roomId).push({
+    name: getUserName(),
+    fileUrl: LOADING_FILE_URL,
+    profilePicUrl: getProfilePicUrl(),
+    filename: file.name
+  }).then(function(messageRef) {
+    // 2 - Upload the file to Cloud Storage.
+    var filePath = firebase.auth().currentUser.uid + '/' + messageRef.key + '/' + file.name;
+    return firebase.storage().ref(filePath).put(file).then(function(fileSnapshot) {
+      // 3 - Generate a public URL for the file.
+      return fileSnapshot.ref.getDownloadURL().then((url) => {
+        // 4 - Update the chat message placeholder with the image's URL.
+        return messageRef.update({
+          fileUrl: url,
+          storageUri: fileSnapshot.metadata.fullPath
+        });
+      });
+    });
+  }).catch(function(error){
+    console.error('there was an error uploading a file to Cloud Storage', error);
+  });
+}
+
 
 // Saves the messaging device token to the datastore.
 function saveMessagingDeviceToken() {
@@ -124,6 +265,24 @@ function requestNotificationsPermissions() {
   }).catch(function(error) {
     console.error('Unable to get permissiont to notify.', error);
   });
+}
+
+// Triggered when a file is selected via the media picker.
+function onFileSelected(event) {
+  event.preventDefault();
+  var file = event.target.files[0];
+
+  var metadata = {
+    'contentType': file.type
+  };
+
+  // Clear the selection in the file picker input.
+  fileFormElement.reset();
+
+  // Check if the user is signed-in
+  if (checkSignedInWithMessage()) {
+    saveFileMessage(file);
+  }
 }
 
 // Triggered when a file is selected via the media picker.
@@ -161,6 +320,7 @@ function onMessageFormSubmit(e) {
     });
   }
 }
+
 
 // Triggers when the auth state change for instance when the user signs-in or signs-out.
 function authStateObserver(user) {
@@ -224,11 +384,55 @@ var MESSAGE_TEMPLATE =
       '<div class="name"></div>' +
     '</div>';
 
+var USERLIST_TEMPLATE =
+    '<div class="user-container">' +
+      '<div class="spacing"><div class="pic"></div></div>' +
+      '<div class="username"></div>' +
+      '<div class="email"></div>' +
+    '</div>';
+
+var CHATLIST_TEMPLATE =
+      '<div class="chatlist-container">' +
+        '<div class= "roomName"></div>' +
+      '</div>'
+
 // A loading image URL.
 var LOADING_IMAGE_URL = 'https://www.google.com/images/spin-32.gif?a';
+var LOADING_FILE_URL = 'https://www.google.com/images/spin-32.gif?a'
+
+// Display user list in the UI.
+// UI다듬어야함. 왜 안바뀌냐 어유
+function displayUser(key, name, picUrl, email){
+  var div = document.getElementById(key);
+  // If an element for that user does not exists yet we create it.
+  if (!div) {
+    var container = document.createElement('div');
+    container.innerHTML = USERLIST_TEMPLATE;
+    div = container.firstChild;
+    div.setAttribute('id', key);
+    userListElement.appendChild(div);
+  }
+  if (picUrl) {
+    div.querySelector('.pic').style.backgroundImage = 'url(' + picUrl + ')';
+  }
+  div.querySelector('.username').textContent = name;
+  div.querySelector('.email').textContent = email;
+}
+
+function displayChatRoom(roomId){
+  var div = document.getElementById(roomId);
+  if(!div){
+    var container = document.createElement('div');
+    container.innerHTML = CHATLIST_TEMPLATE;
+    div = container.firstChild;
+    div.setAttribute('id', roomId);
+    chatListElement.appendChild(div);
+  }
+  div.querySelector('.roomName').textContent = roomId;
+}
 
 // Displays a Message in the UI.
-function displayMessage(key, name, text, picUrl, imageUrl) {
+function displayMessage(key, name, text, picUrl, imageUrl, fileUrl, filename) {
   var div = document.getElementById(key);
   // If an element for that message does not exists yet we create it.
   if (!div) {
@@ -255,6 +459,8 @@ function displayMessage(key, name, text, picUrl, imageUrl) {
     image.src = imageUrl + '&' + new Date().getTime();
     messageElement.innerHTML = '';
     messageElement.appendChild(image);
+  } else if(fileUrl){
+      messageElement.innerHTML = '<a href="' +  fileUrl + '">'+filename+'</a>';
   }
   // Show the card fading-in and scroll to view the new message.
   setTimeout(function() {div.classList.add('visible')}, 1);
@@ -262,6 +468,36 @@ function displayMessage(key, name, text, picUrl, imageUrl) {
   messageInputElement.focus();
 }
 
+//유저리스트 클릭
+function onUserListClick(target){
+  console.log("onuserlistclick!");
+  var database = firebase.database();
+  var targetUserUid = target.getAttribute("id");
+  var ref = firebase.database().ref('/users/').child(targetUserUid).once('value').then(function(snapshot){
+    var targetUserName = snapshot.val().name;
+    console.log(targetUserName);
+    var roomTitle = targetUserName + '님';
+    var useruid = firebase.auth().currentUser.uid;
+    var roomUserlist = [targetUserUid, useruid];
+    var roomUserName = [targetUserName, getUserName()];
+    var roomId = MAKEID_CHAR + useruid;
+    openChatRoom(roomId, roomTitle);
+  });
+}
+
+// 채팅방 열고 메세지 로드
+function openChatRoom(roomId, roomTitle){
+  console.log("open chat room!!");
+  var isOpenRoom = true;
+  if(roomTitle){
+   roomNameElement.innerHTML = roomTitle;
+  }
+  loadMessages(roomTitle);
+}
+
+function onChatListClick(target){
+
+}
 // Enables or disables the submit button depending on the values of the input
 // fields.
 function toggleButton() {
@@ -286,17 +522,28 @@ checkSetup();
 
 // Shortcuts to DOM Elements.
 var messageListElement = document.getElementById('messages');
+var userListElement = document.getElementById('user-list-element');
+var chatListElement = document.getElementById('chat-list-element');
 var messageFormElement = document.getElementById('message-form');
 var messageInputElement = document.getElementById('message');
 var submitButtonElement = document.getElementById('submit');
 var imageButtonElement = document.getElementById('submitImage');
 var imageFormElement = document.getElementById('image-form');
 var mediaCaptureElement = document.getElementById('mediaCapture');
+var fileButtonElement = document.getElementById('submitFile');
+var fileFormElement = document.getElementById('file-form');
+var fileCaptureElement = document.getElementById('fileCapture');
 var userPicElement = document.getElementById('user-pic');
 var userNameElement = document.getElementById('user-name');
 var signInButtonElement = document.getElementById('sign-in');
 var signOutButtonElement = document.getElementById('sign-out');
 var signInSnackbarElement = document.getElementById('must-signin-snackbar');
+var roomNameElement = document.getElementById('roomName');
+
+var INDEXDB_DB_NAME = "USER";
+var INDEXDB_VERSION = 1;
+var INDEXDB_STORE = 'users';
+var MAKEID_CHAR = '@make@';
 
 // Saves message on form submit.
 messageFormElement.addEventListener('submit', onMessageFormSubmit);
@@ -313,9 +560,18 @@ imageButtonElement.addEventListener('click', function(e) {
   mediaCaptureElement.click();
 });
 mediaCaptureElement.addEventListener('change', onMediaFileSelected);
+// Events for file upload.
+fileButtonElement.addEventListener('click', function(e) {
+  e.preventDefault();
+  fileCaptureElement.click();
+});
+fileCaptureElement.addEventListener('change', onFileSelected);
+
 
 // initialize Firebase
 initFirebaseAuth();
 
 // We load currently existing chat messages and listen to new ones.
-loadMessages();
+// loadMessages();
+loadUserList();
+loadChatList();
