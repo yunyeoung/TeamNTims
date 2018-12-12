@@ -1,5 +1,10 @@
-# Firebase Web Codelab - Start code
+"대학생 팀프로젝트 채팅 프로그램 "팀앤팀즈(TeamNTims)" "
+기존 협업 툴은 회사원들을 위해 개발되어있다. 대학생 팀프로젝트의 목적에 맞춰 기능을 제공하고, 최고의 협업을 돕기 위하고자 하는 웹 메신저이다.
 
-This folder contains the starting code for the [Firebase: Build a Real Time Web Chat App Codelab](https://codelabs.developers.google.com/codelabs/firebase-web/).
 
-If you'd like to jump directly to the end and see the finished code head to the [web](../web) directory.
+개발자 정보
+1415020 김채윤 cyoonkim
+1614037 최윤영 yunyeoung
+1771036 안샛별 sbyeol3
+1771093 문지윤 door4658
+1771012 김수영 Sooyyoungg
