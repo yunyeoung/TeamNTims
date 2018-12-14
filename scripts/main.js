@@ -128,8 +128,6 @@ function loadMessages(roomId) {
     // Loads the messages and listen for new ones.
     var callback = function(snap) {
       var data = snap.val();
-      console.log(snap.key);
-      console.log(data.name);
       displayMessage(snap.key, data.name, data.text, data.profilePicUrl, data.imageUrl, data.fileUrl, data.filename);
     };
 
@@ -468,6 +466,29 @@ function displayMessage(key, name, text, picUrl, imageUrl, fileUrl, filename) {
   messageInputElement.focus();
 }
 
+function loadCalenderEvent(){
+  console.log("load Calendar!!");
+  var callback = function(snap){
+    var data = snap.val();
+    displayEvent(snap.key, data.title, data.startdate, data.enddate);
+  };
+  firebase.database().ref('/calendar/').on('child_added', callback);
+  firebase.database().ref('/calendar/').on('child_changed', callback);
+}
+
+function displayEvent(key, title, startdate, enddate){
+  console.log("in display Event!");
+  var myEvent = {
+            title: title,
+            allDay: true,
+            start: moment(startdate),
+            end: moment(enddate)
+          };
+          if(moment(startdate).isValid()){
+            $('#calendar').fullCalendar('renderEvent', myEvent);
+          }else('invalid date.');
+}
+
 //유저리스트 클릭
 function onUserListClick(target){
   console.log("onuserlistclick!");
@@ -575,3 +596,45 @@ initFirebaseAuth();
 // loadMessages();
 loadUserList();
 loadChatList();
+loadCalenderEvent();
+
+
+
+$(function() {
+
+// page is now ready, initialize the calendar...
+
+$('#calendar').fullCalendar({
+  defaultView: 'month',
+  contentHeight:450,
+
+  header:{
+    left: 'addEventButton, month, agendaWeek',
+    center: 'title',
+    right: 'prev, today, next'
+  },
+
+  customButtons: {
+    addEventButton: {
+      text: 'add event',
+      click: function(){
+        var database = firebase.database();
+        var calendarRef = firebase.database().ref('/calendar/');
+        var dateStr = prompt('Enter a date in YYYY-MM-DD format');
+        var dateEnd = prompt('Enter a date end');
+        var mytitle = prompt('Enter the title');
+        var date = moment(dateStr);
+        return calendarRef.push({
+          title: mytitle,
+          startdate: dateStr,
+          enddate: dateEnd
+        });
+
+      }
+    }
+  }
+
+});
+
+
+});
