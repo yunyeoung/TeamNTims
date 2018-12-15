@@ -48,6 +48,11 @@
   <!-- App Styling -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:regular,bold,italic,thin,light,bolditalic,black,medium&amp;lang=en">
   <link rel="stylesheet" href="styles/main.css">
+  <link rel='stylesheet' href='fullcalendar/fullcalendar.css' />
+
+  <script src='lib/jquery.min.js'></script>
+  <script src='lib/moment.min.js'></script>
+  <script src='fullcalendar/fullcalendar.js'></script>
 </head>
 
 <body>
@@ -137,7 +142,8 @@
         </div>
         <div id="vote_container" class="mdl-cell mdl-cell--12-col">
           <div id="vote_card" class="mdl-card mdl-shadow--2dp mdl-cell mdl-cell--6col mdl-cell--6-col-tablet mdl-cell--12-col-desktop">
-            vote
+            <div id="calendar">
+            </div>
         </div>
       </div>
     </div>
@@ -156,5 +162,8 @@
 <script src="/__/firebase/init.js"></script>
 
 <script src="scripts/main.js"></script>
+
+
+
 </body>
 </html>
