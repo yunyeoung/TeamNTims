@@ -59,10 +59,10 @@
 <div class="demo-layout mdl-layout mdl-js-layout mdl-layout--fixed-header">
 
   <!-- Header section containing logo -->
-  <header class="mdl-layout__header mdl-color-text--white mdl-color--light-green-400">
+  <header class="mdl-layout__header mdl-color-text--white mdl-color--light-green-900">
     <div class="mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-grid">
       <div class="mdl-layout__header-row mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-cell--12-col-desktop">
-        <h3><i class="material-icons">chat_bubble_outline</i> teamNtims</h3>
+        <h3><img src="images/tNtLogo_small.png"/></h3>
       </div>
       <div id="user-container">
         <div hidden id="user-pic"></div>
@@ -80,25 +80,32 @@
     <div class="mdl-grid">
       <!-- friend list & chat list container -->
       <div id="friend-list-container" class="mdl-cell mdl-cell--2-col">
-        <div id="friend-list-card" class="mdl-card mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-cell--8-col-tablet mdl-cell--12-col-desktop">
+        <div id="friend-list-card" 
+        class="mdl-card mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-cell--8-col-tablet mdl-cell--12-col-desktop">
           user list
             <div class="mdl-card__supporting-text mdl-color-text--grey-600">
               <div id="user-list-element">
                 <span id="user-list-filler"></span>
               </div>
             </div>
+            <br>
           chatting list
             <div class="mdl-card__supporting-text mdl-color-text--grey-600">
               <div id="chat-list-element">
                 <span id="chat-list-filler"></span>
               </div>
             </div>
+            <!-- widget -->
+            <br> current attendance
+            <center> <script id="_waue06">
+            var _wau = _wau || []; _wau.push(["small", "sxz5miudyq", "e06"]);</script>
+            <script async src="//waust.at/s.js"></script> </center>
         </div>
       </div>
       <div id="messages-card-container" class="mdl-cell mdl-cell--5-col">
         <!-- Messages container -->
         <div id="messages-card" class="mdl-card mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-cell--8-col-tablet mdl-cell--12-col-desktop">
-          <div id = roomName> Room Name
+          <div id = roomName > Room Name
           </div>
           <div class="mdl-card__supporting-text mdl-color-text--grey-600">
             <div id="messages">
@@ -119,7 +126,6 @@
                 <i class="material-icons">image</i>
               </button>
             </form>
-            </form>
             <form id="file-form" action="#">
               <input id="fileCapture" type="file" accept="/*" capture="camera">
               <button id="submitFile" title="Add an File" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-color--amber-400 mdl-color-text--white">
@@ -134,19 +140,14 @@
           <button class="mdl-snackbar__action" type="button"></button>
         </div>
 
-      <div id="extra_container" class="mdl-cell mdl-cell--5-col">
-        <div id="timetable_container" class="mdl-cell mdl-cell--12-col">
-          <div id="timetable_card" class="mdl-card mdl-shadow--2dp mdl-cell mdl-cell--6col mdl-cell--6-col-tablet mdl-cell--12-col-desktop">
-            timetable
-          </div>
-        </div>
-        <div id="vote_container" class="mdl-cell mdl-cell--12-col">
-          <div id="vote_card" class="mdl-card mdl-shadow--2dp mdl-cell mdl-cell--6col mdl-cell--6-col-tablet mdl-cell--12-col-desktop">
-            <div id="calendar">
+            <div id="extra_container" class="mdl-cell mdl-cell--5-col">
+                <div id="calendar-card" 
+                class="mdl-card mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-cell--8-col-tablet mdl-cell--12-col-desktop">
+                <div id="calendar">
+                  </div> 
             </div>
-        </div>
-      </div>
     </div>
+    
     </div>
   </main>
 </div>
