@@ -1,141 +1,25 @@
-[debug] [2018-12-07T16:34:32.714Z] ----------------------------------------------------------------------
-[debug] [2018-12-07T16:34:32.718Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\dbsdu\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js serve --only hosting
-[debug] [2018-12-07T16:34:32.718Z] CLI Version:   6.0.1
-[debug] [2018-12-07T16:34:32.718Z] Platform:      win32
-[debug] [2018-12-07T16:34:32.718Z] Node Version:  v10.13.0
-[debug] [2018-12-07T16:34:32.723Z] Time:          Sat Dec 08 2018 01:34:32 GMT+0900 (GMT+09:00)
-[debug] [2018-12-07T16:34:32.723Z] ----------------------------------------------------------------------
+[debug] [2018-12-16T11:18:16.808Z] ----------------------------------------------------------------------
+[debug] [2018-12-16T11:18:16.811Z] Command:       C:\Program Files (x86)\nodejs\node.exe C:\Users\tkdlz\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js serve --only hosting
+[debug] [2018-12-16T11:18:16.812Z] CLI Version:   6.1.2
+[debug] [2018-12-16T11:18:16.812Z] Platform:      win32
+[debug] [2018-12-16T11:18:16.812Z] Node Version:  v10.14.2
+[debug] [2018-12-16T11:18:16.816Z] Time:          Sun Dec 16 2018 20:18:16 GMT+0900 (GMT+09:00)
+[debug] [2018-12-16T11:18:16.817Z] ----------------------------------------------------------------------
 [debug] 
-[debug] [2018-12-07T16:34:32.755Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
-[debug] [2018-12-07T16:34:32.759Z] > authorizing via signed-in user
-[debug] [2018-12-07T16:34:32.759Z] [iam] checking project friendlychat-39754 for permissions ["firebase.projects.get"]
-[debug] [2018-12-07T16:34:32.766Z] >>> HTTP REQUEST POST https://cloudresourcemanager.googleapis.com/v1/projects/friendlychat-39754:testIamPermissions  
+[debug] [2018-12-16T11:18:16.835Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2018-12-16T11:18:16.836Z] > authorizing via signed-in user
+[debug] [2018-12-16T11:18:16.836Z] [iam] checking project friendlychat-39754 for permissions ["firebase.projects.get"]
+[debug] [2018-12-16T11:18:16.839Z] >>> HTTP REQUEST POST https://cloudresourcemanager.googleapis.com/v1/projects/friendlychat-39754:testIamPermissions  
 
-[debug] [2018-12-07T16:34:33.990Z] <<< HTTP RESPONSE 200
-[debug] [2018-12-07T16:34:33.994Z] >>> HTTP REQUEST GET https://cloudresourcemanager.googleapis.com/v1/projects/friendlychat-39754  
+[debug] [2018-12-16T11:18:17.994Z] <<< HTTP RESPONSE 200
+[debug] [2018-12-16T11:18:17.996Z] >>> HTTP REQUEST GET https://cloudresourcemanager.googleapis.com/v1/projects/friendlychat-39754  
  
-[debug] [2018-12-07T16:34:35.211Z] <<< HTTP RESPONSE 200
+[debug] [2018-12-16T11:18:18.963Z] <<< HTTP RESPONSE 200
 [info] 
-[info] === Serving from 'C:\Users\dbsdu\friendlychat-web\timNteams'...
+[info] === Serving from 'C:\Users\tkdlz\Desktop\sooyoung\TeamNTims-right'...
 [info] 
-[debug] [2018-12-07T16:34:35.215Z] >>> HTTP REQUEST GET https://mobilesdk-pa.googleapis.com/v1/projects/845309450876/clients/_:getWebAppConfig  
+[debug] [2018-12-16T11:18:18.966Z] >>> HTTP REQUEST GET https://mobilesdk-pa.googleapis.com/v1/projects/845309450876/clients/_:getWebAppConfig  
  
-[debug] [2018-12-07T16:34:36.438Z] <<< HTTP RESPONSE 200
-[info] i  hosting: Serving hosting files from: ./
-[info] +  hosting: Local server: http://localhost:5000
-[debug] [2018-12-08T14:05:25.454Z] ----------------------------------------------------------------------
-[debug] [2018-12-08T14:05:25.458Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\dbsdu\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js serve --only hosting
-[debug] [2018-12-08T14:05:25.458Z] CLI Version:   6.0.1
-[debug] [2018-12-08T14:05:25.459Z] Platform:      win32
-[debug] [2018-12-08T14:05:25.459Z] Node Version:  v10.13.0
-[debug] [2018-12-08T14:05:25.479Z] Time:          Sat Dec 08 2018 23:05:25 GMT+0900 (GMT+09:00)
-[debug] [2018-12-08T14:05:25.479Z] ----------------------------------------------------------------------
-[debug] 
-[debug] [2018-12-08T14:05:25.509Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
-[debug] [2018-12-08T14:05:25.510Z] > authorizing via signed-in user
-[debug] [2018-12-08T14:05:25.510Z] [iam] checking project friendlychat-39754 for permissions ["firebase.projects.get"]
-[debug] [2018-12-08T14:05:25.513Z] > refreshing access token with scopes: ["email","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","openid"]
-[debug] [2018-12-08T14:05:25.513Z] >>> HTTP REQUEST POST https://www.googleapis.com/oauth2/v3/token  
- <request body omitted>
-[debug] [2018-12-08T14:05:25.939Z] <<< HTTP RESPONSE 200
-[debug] [2018-12-08T14:05:25.948Z] >>> HTTP REQUEST POST https://cloudresourcemanager.googleapis.com/v1/projects/friendlychat-39754:testIamPermissions  
-
-[debug] [2018-12-08T14:05:26.884Z] <<< HTTP RESPONSE 200
-[debug] [2018-12-08T14:05:26.885Z] >>> HTTP REQUEST GET https://cloudresourcemanager.googleapis.com/v1/projects/friendlychat-39754  
- 
-[debug] [2018-12-08T14:05:27.812Z] <<< HTTP RESPONSE 200
-[info] 
-[info] === Serving from 'C:\Users\dbsdu\friendlychat-web\timNteams'...
-[info] 
-[debug] [2018-12-08T14:05:27.817Z] >>> HTTP REQUEST GET https://mobilesdk-pa.googleapis.com/v1/projects/845309450876/clients/_:getWebAppConfig  
- 
-[debug] [2018-12-08T14:05:28.888Z] <<< HTTP RESPONSE 200
-[info] i  hosting: Serving hosting files from: ./
-[info] +  hosting: Local server: http://localhost:5000
-[debug] [2018-12-09T05:11:38.069Z] ----------------------------------------------------------------------
-[debug] [2018-12-09T05:11:38.072Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\dbsdu\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js serve --only hosting
-[debug] [2018-12-09T05:11:38.072Z] CLI Version:   6.0.1
-[debug] [2018-12-09T05:11:38.072Z] Platform:      win32
-[debug] [2018-12-09T05:11:38.072Z] Node Version:  v10.13.0
-[debug] [2018-12-09T05:11:38.084Z] Time:          Sun Dec 09 2018 14:11:38 GMT+0900 (GMT+09:00)
-[debug] [2018-12-09T05:11:38.084Z] ----------------------------------------------------------------------
-[debug] 
-[debug] [2018-12-09T05:11:38.111Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
-[debug] [2018-12-09T05:11:38.112Z] > authorizing via signed-in user
-[debug] [2018-12-09T05:11:38.112Z] [iam] checking project friendlychat-39754 for permissions ["firebase.projects.get"]
-[debug] [2018-12-09T05:11:38.115Z] > refreshing access token with scopes: ["email","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","openid"]
-[debug] [2018-12-09T05:11:38.115Z] >>> HTTP REQUEST POST https://www.googleapis.com/oauth2/v3/token  
- <request body omitted>
-[debug] [2018-12-09T05:11:38.606Z] <<< HTTP RESPONSE 200
-[debug] [2018-12-09T05:11:38.619Z] >>> HTTP REQUEST POST https://cloudresourcemanager.googleapis.com/v1/projects/friendlychat-39754:testIamPermissions  
-
-[debug] [2018-12-09T05:11:39.657Z] <<< HTTP RESPONSE 200
-[debug] [2018-12-09T05:11:39.658Z] >>> HTTP REQUEST GET https://cloudresourcemanager.googleapis.com/v1/projects/friendlychat-39754  
- 
-[debug] [2018-12-09T05:11:40.580Z] <<< HTTP RESPONSE 200
-[info] 
-[info] === Serving from 'C:\Users\dbsdu\friendlychat-web\timNteams'...
-[info] 
-[debug] [2018-12-09T05:11:40.585Z] >>> HTTP REQUEST GET https://mobilesdk-pa.googleapis.com/v1/projects/845309450876/clients/_:getWebAppConfig  
- 
-[debug] [2018-12-09T05:11:41.707Z] <<< HTTP RESPONSE 200
-[info] i  hosting: Serving hosting files from: ./
-[info] +  hosting: Local server: http://localhost:5000
-[debug] [2018-12-10T03:51:07.622Z] ----------------------------------------------------------------------
-[debug] [2018-12-10T03:51:07.627Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\dbsdu\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js serve --only hosting
-[debug] [2018-12-10T03:51:07.627Z] CLI Version:   6.0.1
-[debug] [2018-12-10T03:51:07.627Z] Platform:      win32
-[debug] [2018-12-10T03:51:07.627Z] Node Version:  v10.13.0
-[debug] [2018-12-10T03:51:07.652Z] Time:          Mon Dec 10 2018 12:51:07 GMT+0900 (GMT+09:00)
-[debug] [2018-12-10T03:51:07.652Z] ----------------------------------------------------------------------
-[debug] 
-[debug] [2018-12-10T03:51:07.681Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
-[debug] [2018-12-10T03:51:07.683Z] > authorizing via signed-in user
-[debug] [2018-12-10T03:51:07.683Z] [iam] checking project friendlychat-39754 for permissions ["firebase.projects.get"]
-[debug] [2018-12-10T03:51:07.685Z] > refreshing access token with scopes: ["email","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","openid"]
-[debug] [2018-12-10T03:51:07.686Z] >>> HTTP REQUEST POST https://www.googleapis.com/oauth2/v3/token  
- <request body omitted>
-[debug] [2018-12-10T03:51:08.147Z] <<< HTTP RESPONSE 200
-[debug] [2018-12-10T03:51:08.166Z] >>> HTTP REQUEST POST https://cloudresourcemanager.googleapis.com/v1/projects/friendlychat-39754:testIamPermissions  
-
-[debug] [2018-12-10T03:51:09.082Z] <<< HTTP RESPONSE 200
-[debug] [2018-12-10T03:51:09.084Z] >>> HTTP REQUEST GET https://cloudresourcemanager.googleapis.com/v1/projects/friendlychat-39754  
- 
-[debug] [2018-12-10T03:51:10.126Z] <<< HTTP RESPONSE 200
-[info] 
-[info] === Serving from 'C:\Users\dbsdu\friendlychat-web\timNteams'...
-[info] 
-[debug] [2018-12-10T03:51:10.129Z] >>> HTTP REQUEST GET https://mobilesdk-pa.googleapis.com/v1/projects/845309450876/clients/_:getWebAppConfig  
- 
-[debug] [2018-12-10T03:51:11.379Z] <<< HTTP RESPONSE 200
-[info] i  hosting: Serving hosting files from: ./
-[info] +  hosting: Local server: http://localhost:5000
-[debug] [2018-12-11T06:43:10.064Z] ----------------------------------------------------------------------
-[debug] [2018-12-11T06:43:10.070Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\dbsdu\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js serve --only hosting
-[debug] [2018-12-11T06:43:10.071Z] CLI Version:   6.0.1
-[debug] [2018-12-11T06:43:10.071Z] Platform:      win32
-[debug] [2018-12-11T06:43:10.071Z] Node Version:  v10.13.0
-[debug] [2018-12-11T06:43:10.096Z] Time:          Tue Dec 11 2018 15:43:10 GMT+0900 (GMT+09:00)
-[debug] [2018-12-11T06:43:10.096Z] ----------------------------------------------------------------------
-[debug] 
-[debug] [2018-12-11T06:43:10.153Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
-[debug] [2018-12-11T06:43:10.156Z] > authorizing via signed-in user
-[debug] [2018-12-11T06:43:10.156Z] [iam] checking project friendlychat-39754 for permissions ["firebase.projects.get"]
-[debug] [2018-12-11T06:43:10.161Z] > refreshing access token with scopes: ["email","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","openid"]
-[debug] [2018-12-11T06:43:10.161Z] >>> HTTP REQUEST POST https://www.googleapis.com/oauth2/v3/token  
- <request body omitted>
-[debug] [2018-12-11T06:43:10.747Z] <<< HTTP RESPONSE 200
-[debug] [2018-12-11T06:43:10.773Z] >>> HTTP REQUEST POST https://cloudresourcemanager.googleapis.com/v1/projects/friendlychat-39754:testIamPermissions  
-
-[debug] [2018-12-11T06:43:11.980Z] <<< HTTP RESPONSE 200
-[debug] [2018-12-11T06:43:11.982Z] >>> HTTP REQUEST GET https://cloudresourcemanager.googleapis.com/v1/projects/friendlychat-39754  
- 
-[debug] [2018-12-11T06:43:13.480Z] <<< HTTP RESPONSE 200
-[info] 
-[info] === Serving from 'C:\Users\dbsdu\friendlychat-web\timNteams'...
-[info] 
-[debug] [2018-12-11T06:43:13.504Z] >>> HTTP REQUEST GET https://mobilesdk-pa.googleapis.com/v1/projects/845309450876/clients/_:getWebAppConfig  
- 
-[debug] [2018-12-11T06:43:14.708Z] <<< HTTP RESPONSE 200
+[debug] [2018-12-16T11:18:20.189Z] <<< HTTP RESPONSE 200
 [info] i  hosting: Serving hosting files from: ./
 [info] +  hosting: Local server: http://localhost:5000
