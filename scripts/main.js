@@ -474,6 +474,7 @@ function loadCalenderEvent(){
   };
   firebase.database().ref('/calendar/').on('child_added', callback);
   firebase.database().ref('/calendar/').on('child_changed', callback);
+  // firebase.database().ref('/calendar/').on('child_removed', callback);
 }
 
 function displayEvent(key, title, startdate, enddate){
@@ -482,11 +483,20 @@ function displayEvent(key, title, startdate, enddate){
             title: title,
             allDay: true,
             start: moment(startdate),
-            end: moment(enddate)
+            end: moment(enddate),
+            key: key
           };
           if(moment(startdate).isValid()){
             $('#calendar').fullCalendar('renderEvent', myEvent);
           }else('invalid date.');
+}
+
+function deleteEvent(eventKey, eventId){
+  console.log(eventKey);
+  var database = firebase.database();
+  var eventRef = firebase.database().ref('/calendar/').child(eventKey).remove();
+  $('#calendar').fullCalendar('removeEvents',eventId);
+
 }
 
 //유저리스트 클릭
@@ -607,6 +617,7 @@ $(function() {
 $('#calendar').fullCalendar({
   defaultView: 'month',
   contentHeight:450,
+  eventColor: 'green',
 
   header:{
     left: 'addEventButton, month, agendaWeek',
@@ -632,6 +643,12 @@ $('#calendar').fullCalendar({
 
       }
     }
+  },
+
+  eventClick: function(calEvent, jsEvent, view) {
+
+      alert('Event: ' + calEvent.title + "is deleted!");
+      deleteEvent(calEvent.key, calEvent._id);
   }
 
 });
