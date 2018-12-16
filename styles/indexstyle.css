@@ -17,6 +17,9 @@
  html, body {
   font-family: 'Roboto', 'Helvetica', sans-serif;
 }
+
+
+
 main, #messages-card {
   height: 100%;
   padding-bottom: 0;
@@ -142,11 +145,11 @@ main, #messages-card {
   position: absolute;
   display: flex;
   flex-direction: row;
-  top: 450px;
+  top: 22px;
   width: 100%;
-  align-items: center;
+  right: 0;
   padding-left: 10px;
-  justify-content: center;
+  justify-content: flex-end;
   padding-right: 10px;
 }
 #user-container #user-pic {
