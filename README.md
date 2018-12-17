@@ -23,7 +23,7 @@ College student team project chat program
 
 	<form id="file-form" action="#">
       		<input id="fileCapture" type="file" accept="/*" capture="camera">
- 	             <button id="submitFile" title="Add an File" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect 			mdl-color--amber-400 mdl-color-text--white">
+ 	             <button id="submitFile" title="Add an File" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-color--amber-400 mdl-color-text--white">
       	       <i class="material-icons">cloud_upload</i></button>
 	</form>
 
