@@ -26,6 +26,111 @@ College student team project chat program
 
 ### 6. 일정 관리 기능
 ***
+일정을 함께 공유해야 하기 때문에 calendar에 일정을 표시함과 동시에 firebase database에 저장하여 공유할 수 있도록 구현하였다
+
+#### 6.1 fullcalendar 사용 준비
+##### first.html
+calendar가 들어갈 페이지의 head부분에 위의 dependency load 문장을 작성
+	<link rel='stylesheet' href='fullcalendar/fullcalendar.css' />
+	<script src='lib/jquery.min.js'></script>
+  	<script src='lib/moment.min.js'></script>
+  	<script src='fullcalendar/fullcalendar.js'></script>
+
+#### 6.2 calendar 생성
+##### first.html
+	  <div id="calendar">
+          </div> 
+##### main.js
+jquery를 사용하여 달력 생성한 후 기본 설정
+
+	$(function() {
+	
+	$('#calendar').fullCalendar({
+  	defaultView: 'month',
+  	contentHeight:450,
+  	eventColor: 'green',
+	
+  	header:{
+ 	   left: 'addEventButton, month, listWeek, prev, today, next',
+ 	   center: 'title',
+ 	   right: 'prev, today, next'
+	  } 
+	})
+	}
+
+#### 6.3 event 추가
+##### main.js
+calendar을 생성한 jqery 안에 button을 추가하는 코드 추가한 후 클릭했을시 발생하는 메소드 정의.
+'add event'이름의 버튼을 클릭했을 때 start date와 end date, title을 차례로 입력하면 firebase database의 calendar 아래에 저장.
+
+	customButtons: {
+ 	   addEventButton: {
+	     text: 'add event',
+ 	     click: function(){
+ 	      var database = firebase.database();
+ 	      var calendarRef = firebase.database().ref('/calendar/');
+ 	      var dateStr = prompt('Enter a date in YYYY-MM-DD format');
+  	      var dateEnd = prompt('Enter a date end');
+  	      var mytitle = prompt('Enter the title');
+ 	      var date = moment(dateStr);
+  	      return calendarRef.push({
+  	        title: mytitle,
+   	        startdate: dateStr,
+ 	        enddate: dateEnd
+	        });
+ 	     }
+ 	   }
+ 	 }
+
+
+채팅에 입장하였을때 calendar에 저장된 event를 불러오는 함수이다
+firebase database의 calendar 참조 아래에 child가 더해지거나 변경되면 callback을 호출한다
+callback안에서는 데이터의 snapshot을 찍어 값을 displayEvent을 호출하며 넘겨준다
+
+	function loadCalenderEvent(){
+ 	 var callback = function(snap){
+ 	   var data = snap.val();
+	    displayEvent(snap.key, data.title, data.startdate, data.enddate);
+	  };
+	  firebase.database().ref('/calendar/').on('child_added', callback);
+	  firebase.database().ref('/calendar/').on('child_changed', callback);
+	}
+
+firebase database에서 받아온 값을 calendar에 찍어주는 메소드이다
+event의 설정 값을 변수로 묶고 'renderEvent'를 통해 calendar에 찍어준다.
+
+	function displayEvent(key, title, startdate, enddate){
+ 	 console.log("in display Event!");
+	  var myEvent = {
+	          title: title,
+ 	          allDay: true,
+ 	          start: moment(startdate),
+   	          end: moment(enddate),
+  	          key: key
+ 	         };
+ 	         if(moment(startdate).isValid()){
+ 	           $('#calendar').fullCalendar('renderEvent', myEvent);
+  	        }else('invalid date.');
+	}
+#### 6.4 event 삭제
+##### main.js
+calendar을 생성한 jqery 안에 현재 calendar에 저장된 event를 클릭했을 때 일어나는 메소드 정의.
+이벤트가 삭제됨을 알리는 경고창을 띄운 후 deleteEvent메소드를 호출하며 현재 event의 key에 저장된 값과 id값을 넘겨준다.
+
+	eventClick: function(calEvent, jsEvent, view) {
+      		alert('Event: ' + calEvent.title + "is deleted!");
+   		deleteEvent(calEvent.key, calEvent._id);
+ 		}
+
+deleteEvent 메소드에서는 firebase database의 calendar 참조 아래에 넘겨받은 event의 key 값과 같은 참조를 찾아 삭제한 후
+'removeEvents'를 통해 해당 event를 calendar에서 삭제한다.
+
+	function deleteEvent(eventKey, eventId){
+	  console.log(eventKey);
+	  var database = firebase.database();
+	  var eventRef = firebase.database().ref('/calendar/').child(eventKey).remove();
+	  $('#calendar').fullCalendar('removeEvents',eventId);
+	}
 
 ### 7. user list 확인
 ***
@@ -61,6 +166,11 @@ College student team project chat program
 ```
 #### 8.2 index.html
 
+사용 오픈 소스
+==============
+- firebase
+- fullcalendar https://fullcalendar.io/
+- 
 
 앱 설치 방법 및 사용법
 ==============
