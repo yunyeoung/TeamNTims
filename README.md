@@ -241,12 +241,12 @@ deleteEvent 메소드에서는 firebase database의 calendar 참조 아래에 �
             <button hidden id="sign-in" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-color-text--white">
               <i class="material-icons">account_circle</i>Sign-in with Google
             </button>
-          </div>
+        </div>
 
 채팅방 입장 버튼 구현
 
 ```
-<button id="login"
+	<button id="login"
 	class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-color-text--orange-200" 
 	onclick="location.href='/first.html'">
 	  enter to chat room
@@ -257,7 +257,8 @@ deleteEvent 메소드에서는 firebase database의 calendar 참조 아래에 �
 사용 오픈 소스
 ==============
 - firebase
-- fullcalendar https://fullcalendar.io/
+- fullcalendar https://fullcalendar.io/ 
+- fullcalendar는 MIT licence인데 라이센스 두개 작성이 안되네용,,,
 - 
 
 앱 설치 방법 및 사용법
