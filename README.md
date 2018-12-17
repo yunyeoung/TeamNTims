@@ -1,6 +1,5 @@
 College student team project chat program
 =============
-***
 
 대학생 팀프로젝트 채팅 프로그램 "팀앤팀즈(TeamNTims)"  
 -------------
@@ -31,23 +30,54 @@ College student team project chat program
 ### 7. user list 확인
 ***
 
+### 8. 전체 UI 수정
+***
+#### 8.1 index.html
+
+어플리케이션의 로고를 입력하는 코드
+ 
+	<div style="text-align:center; padding:200px 0 0 0"><img src="images/tNtLogo.png"/></div>
+
+구글 로그인 버튼, 그림 추가
+
+	<div id="user-container" style="text-align:center; padding:300px 0 0 0">
+            <div hidden id="user-pic"></div>
+            <div hidden id="user-name"></div>
+            <button hidden id="sign-out" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-color-text--white">Sign-out
+            </button>
+            <button hidden id="sign-in" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-color-text--white">
+              <i class="material-icons">account_circle</i>Sign-in with Google
+            </button>
+          </div>
+
+채팅방 입장 버튼 구현
+
+```
+<button id="login"
+	class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-color-text--orange-200" 
+	onclick="location.href='/first.html'">
+	  enter to chat room
+	</button>
+```
+#### 8.2 index.html
+
+
 앱 설치 방법 및 사용법
 ==============
-***
 
 > TeamNTims는 웹 어플리케이션으로 별도의 설치 필요 없이 주소로 접속하시면 됩니다.   
 > [TeamNTims](https://friendlychat-39754.firebaseapp.com/)   
-> https://friendlychat-39754.firebaseapp.com/
+> https://friendlychat-39754.firebaseapp.com/   
+> *****여기 이미지 추가 해야할 것 같아요!
 
 라이센스 정보
 ===============
-***
 
 See [LICENSE](https://github.com/yunyeoung/TeamNTims/blob/right/LICENSE) , Apache License 2.0
 
 개발자 정보 
 =============
-***
+
 - 1415020 김채윤 cyoonkim  
     * 중간발표  
     소스 조사, 발표   
