@@ -31,6 +31,7 @@ College student team project chat program
 #### 6.1 fullcalendar 사용 준비
 ##### first.html
 calendar가 들어갈 페이지의 head부분에 위의 dependency load 문장을 작성
+
 	<link rel='stylesheet' href='fullcalendar/fullcalendar.css' />
 	<script src='lib/jquery.min.js'></script>
   	<script src='lib/moment.min.js'></script>
