@@ -21,13 +21,13 @@ College student team project chat program
 ##### first.html
 파일 입력 받는 폼 추가
 
-	```html
+```html
 	<form id="file-form" action="#">
       		<input id="fileCapture" type="file" accept="/*" capture="camera">
  	             <button id="submitFile" title="Add an File" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-color--amber-400 mdl-color-text--white">
       	       <i class="material-icons">cloud_upload</i></button>
 	</form>
-	```
+```
 
 ##### main.js
 first.html의 id에 접근하도록 변수 생성
