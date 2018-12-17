@@ -4,7 +4,7 @@ College student team project chat program
 대학생 팀프로젝트 채팅 프로그램 "팀앤팀즈(TeamNTims)"  
 -------------
 
->기존 협업 툴은 회사원들을 위해 개발되어있다. 대학생 팀프로젝트의 목적에 맞춰 기능을 제공하고, 최고의 협업을 돕기 위하고자 하는 웹 메신저이다. 채팅기능, 파일다운로드, 현재접속자 확인, 회의알람 기능, 일정관리 기능 등을 갖추고 있다.
+>기존 협업 툴은 회사원들을 위해 개발되어있다. 대학생 팀프로젝트의 목적에 맞춰 기능을 제공하고, 최고의 협업을 돕기 위하고자 하는 웹 메신저이다. 채팅기능, 파일 업로드 및 다운로드, 현재접속자 확인, 회의알람 기능, 일정관리 기능 등을 갖추고 있다.
 
 채팅 주요 기능
 ============
@@ -15,8 +15,59 @@ College student team project chat program
 ### 2. 로그인 기능  
 ***
 
-### 3. 파일 다운로드 기능  
+### 3. 파일 업로드 및 다운로드 기능  
 ***
+#### 3.1 파일 업로드 
+##### first.html
+파일 입력 받는 폼 추가
+
+	<form id="file-form" action="#">
+      		<input id="fileCapture" type="file" accept="/*" capture="camera">
+ 	             <button id="submitFile" title="Add an File" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect 			mdl-color--amber-400 mdl-color-text--white">
+      	       <i class="material-icons">cloud_upload</i></button>
+	</form>
+
+##### main.js
+first.html의 id에 접근하도록 변수 생성
+
+	var fileButtonElement = document.getElementById('submitFile');
+	var fileFormElement = document.getElementById('file-form');
+	var fileCaptureElement = document.getElementById('fileCapture');
+
+element에 listner 추가
+- fileButtonElement를 클릭했을 때 현재 이벤트의 기본 동작을 중단하고 filreCaptureElement를 클릭하는 메소드
+	
+	// Events for file upload.
+	fileButtonElement.addEventListener('click', function(e) {
+	  // 현재 이벤트의 기본 동작 중단
+	  e.preventDefault();
+	  fileCaptureElement.click();
+	});
+
+- fileCaptureElement는 input 필드와 연결되어 있음. 파일이 선택되어 fileCaptureElement가 변할 때 onFileSelected 호출 <-이부분 설명 괜찮나요??
+
+	fileCaptureElement.addEventListener('change', onFileSelected);
+
+onFileSelected 함수
+
+	// Triggered when a file is selected via the media picker.
+	function onFileSelected(event) {
+  	event.preventDefault();
+ 	 var file = event.target.files[0];
+	
+ 	 var metadata = {
+ 	   'contentType': file.type
+	  };
+	
+	  // Clear the selection in the file picker input.
+ 	 fileFormElement.reset();
+	
+ 	 // Check if the user is signed-in
+ 	 if (checkSignedInWithMessage()) {
+ 	   saveFileMessage(file);
+ 	 }
+	}
+
 
 ### 4. 현재 접속자 확인
 ***
