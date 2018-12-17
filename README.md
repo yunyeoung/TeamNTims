@@ -35,7 +35,7 @@ first.html의 id에 접근하도록 변수 생성
 	var fileCaptureElement = document.getElementById('fileCapture');
 
 element에 listner 추가
-- fileButtonElement를 클릭했을 때 현재 이벤트의 기본 동작을 중단하고 filreCaptureElement를 클릭하는 메소드
+fileButtonElement를 클릭했을 때 현재 이벤트의 기본 동작을 중단하고 filreCaptureElement를 클릭하는 메소드
 	
 	// Events for file upload.
 	fileButtonElement.addEventListener('click', function(e) {
@@ -44,11 +44,11 @@ element에 listner 추가
 	  fileCaptureElement.click();
 	});
 
-- fileCaptureElement는 input 필드와 연결되어 있음. 파일이 선택되어 fileCaptureElement가 변할 때 onFileSelected 호출 <-이부분 설명 괜찮나요??
+fileCaptureElement는 input 필드와 연결되어 있다. 파일이 선택되어 fileCaptureElement가 변할 때 onFileSelected 호출 <-이부분 설명 괜찮나요??
 
 	fileCaptureElement.addEventListener('change', onFileSelected);
 
-onFileSelected 함수
+onFileSelected 함수. 파일이 선택된 후 file변수에 해당 파일을 저장한 후 다음에 있을 파일 선택을 위해 file picker을 비우고 유저가 sign-in상태이면 saveFileMessage에 file을 넘겨주며 호출한다.
 
 	// Triggered when a file is selected via the media picker.
 	function onFileSelected(event) {
@@ -68,6 +68,42 @@ onFileSelected 함수
  	 }
 	}
 
+saveFileMessage함수. file을 입력받았을 시에 /messages 참조의해당 roomId참조 밑에 message format에 fileUrl과 filename을 더해 firebase database에 저장한다. fileUrl은 firebase storage에 업로드 한 후 snapshot을 통해 넘겨받는다. 
+<-이부분 설명 괜찮나유ㅠㅠ
+
+	// Saves a new message containing an image in Firebase.
+	// This first saves the image in Firebase storage.
+	function saveFileMessage(file) {
+	  var roomId = roomNameElement.innerHTML;
+	  // add a message with a loading icon that will get updated with the shared file.
+	  firebase.database().ref('/messages/' + roomId).push({
+	    name: getUserName(),
+ 	   fileUrl: LOADING_FILE_URL,
+ 	   profilePicUrl: getProfilePicUrl(),
+ 	   filename: file.name
+ 	 }).then(function(messageRef) {
+ 	   // Upload the file to Cloud Storage.
+  	  var filePath = firebase.auth().currentUser.uid + '/' + messageRef.key + '/' + file.name;
+ 	   return firebase.storage().ref(filePath).put(file).then(function(fileSnapshot) {
+ 	     // Generate a public URL for the file.
+  	    return fileSnapshot.ref.getDownloadURL().then((url) => {
+  	      // Update the chat message placeholder with the image's URL.
+        	return messageRef.update({
+	          fileUrl: url,
+	          storageUri: fileSnapshot.metadata.fullPath
+	        });
+	      });
+	    });
+	  }).catch(function(error){
+	    console.error('there was an error uploading a file to Cloud Storage', error);
+	  });
+	}
+
+#### 3.2 파일 다운로드
+
+displayMessage 메소드 안에서 filename 을 인자로 받았을 때, messageElement를 만든 후 그 안의 콘텐츠를 filename을 출력하고 fileUrl의 참조를 링크로 연결하여 다운로드 할 수 있게 구현하였다. 
+
+	messageElement.innerHTML = '<a href="' +  fileUrl + '">'+filename+'</a>';
 
 ### 4. 현재 접속자 확인
 ***
