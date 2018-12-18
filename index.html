@@ -13,6 +13,7 @@
 -->
 
 <html lang="en">
+
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -51,45 +52,52 @@
   <link rel="stylesheet" href="styles/indexstyle.css">
 
   <!-- 이부분 채윤 수정 코드 -->
- <style>
-body{
-  background-color: #007042;
-}
-
- </style>
-
+  <style>
+    body {
+      background-color: #007042;
+    }
+  </style>
 
 </head>
 
 <body>
 
-<div style="text-align:center; font-size:3em; padding:300px 0 0 0">teamNtims</div>
-  <div id="user-container">
-          <div hidden id="user-pic"></div>
-          <div hidden id="user-name"></div>
-          <button hidden id="sign-out" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-color-text--white">Sign-out
-          </button>
-          <button hidden id="sign-in" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-color-text--white">
-            <i class="material-icons">account_circle</i>Sign-in with Google
-          </button>
-        </div>
-<p align="center">
-  <button id="login" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" onclick="location.href='/first.html'">
-    채팅창 입장
-  </button>
+  <!-- 로고 표시 -->
+  <div style="text-align:center; padding:200px 0 0 0"><img src="images/tNtLogo.png" /></div>
+  <br> <br> <br>
 
-</p>
+  <!-- 입장 버튼 -->
+  <p align="center">
+    <button id="login" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-color-text--orange-200"
+      onclick="location.href='/first.html'">
+      ENTER TO CHAT ROOM
+    </button>
+  </p>
+
+  <!-- 유저 정보 & 로그인, 로그아웃 -->
+  <center>
+    <!-- 유저 정보 표시 -->
+    <div hidden id="user-pic"></div>
+    <div hidden id="user-name" class="mdl-color-text--orange-200"></div>
+
+    <!-- 계정 로그인 & 로그아웃 버튼 -->
+    <button hidden id="sign-out" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-color-text--white">Sign-out
+    </button>
+    <button hidden id="sign-in" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-color-text--white">
+      <i class="material-icons">account_circle</i>Sign-in with Google
+    </button>
+  </center>
 
 
+  <script src="/__/firebase/5.5.7/firebase-app.js"></script>
+  <script src="/__/firebase/5.5.7/firebase-auth.js"></script>
+  <script src="/__/firebase/5.5.7/firebase-database.js"></script>
+  <script src="/__/firebase/5.5.7/firebase-storage.js"></script>
+  <script src="/__/firebase/5.5.7/firebase-messaging.js"></script>
+  <script src="/__/firebase/init.js"></script>
 
-<script src="/__/firebase/5.5.7/firebase-app.js"></script>
-<script src="/__/firebase/5.5.7/firebase-auth.js"></script>
-<script src="/__/firebase/5.5.7/firebase-database.js"></script>
-<script src="/__/firebase/5.5.7/firebase-storage.js"></script>
-<script src="/__/firebase/5.5.7/firebase-messaging.js"></script>
-<script src="/__/firebase/init.js"></script>
-
-<script src="scripts/login.js"></script>
+  <script src="scripts/login.js"></script>
 
 </body>
+
 </html>
