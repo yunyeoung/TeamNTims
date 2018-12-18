@@ -140,7 +140,7 @@ function loadMessages(roomId) {
 function loadUserList(){
   var callback = function(snap){
     var data = snap.val();
-    displayUser(snap.key, data.name, data.profilePicUrl, data.email);
+    displayUser(snap.key, data.name+" 님");
 
     var arrList = userListElement.getElementsByClassName("user-container");
     var arrLen = arrList.length;
@@ -474,6 +474,7 @@ function loadCalenderEvent(){
   };
   firebase.database().ref('/calendar/').on('child_added', callback);
   firebase.database().ref('/calendar/').on('child_changed', callback);
+  // firebase.database().ref('/calendar/').on('child_removed', callback);
 }
 
 function displayEvent(key, title, startdate, enddate){
@@ -482,11 +483,20 @@ function displayEvent(key, title, startdate, enddate){
             title: title,
             allDay: true,
             start: moment(startdate),
-            end: moment(enddate)
+            end: moment(enddate),
+            key: key
           };
           if(moment(startdate).isValid()){
             $('#calendar').fullCalendar('renderEvent', myEvent);
           }else('invalid date.');
+}
+
+function deleteEvent(eventKey, eventId){
+  console.log(eventKey);
+  var database = firebase.database();
+  var eventRef = firebase.database().ref('/calendar/').child(eventKey).remove();
+  $('#calendar').fullCalendar('removeEvents',eventId);
+
 }
 
 //유저리스트 클릭
@@ -511,7 +521,7 @@ function openChatRoom(roomId, roomTitle){
   console.log("open chat room!!");
   var isOpenRoom = true;
   if(roomTitle){
-   roomNameElement.innerHTML = roomTitle;
+   //roomNameElement.innerHTML = roomTitle; <- 채팅방 이름 표시 함수
   }
   loadMessages(roomTitle);
 }
@@ -606,17 +616,20 @@ $(function() {
 
 $('#calendar').fullCalendar({
   defaultView: 'month',
-  contentHeight:450,
+  contentHeight:550,
+  eventColor: 'orange',
+  
 
   header:{
-    left: 'addEventButton, month, agendaWeek',
-    center: 'title',
-    right: 'prev, today, next'
+    left: 'month,agendaWeek',
+    center: 'title,addEventButton,attendanceCheck',
+    right: 'prev,today,next'
   },
 
   customButtons: {
+    //일정추가 버튼
     addEventButton: {
-      text: 'add event',
+      text: '일정 추가',
       click: function(){
         var database = firebase.database();
         var calendarRef = firebase.database().ref('/calendar/');
@@ -629,10 +642,41 @@ $('#calendar').fullCalendar({
           startdate: dateStr,
           enddate: dateEnd
         });
+      }
+    },
 
+    //출석체크 버튼
+    attendanceCheck: {
+      text: '출석체크',
+      id: 'check',
+      click: function(){
+        var calendarRef = firebase.database().ref('/calendar/');
+       var userName = firebase.auth().currentUser.displayName;
+        var date = $('#calendar').fullCalendar('getDate').format();
+        alert(userName+"님 출석체크 완료!\n"+"( "+date+" )");
+
+          return calendarRef.push({
+          title: userName+" 출석",
+          startdate: date,
+          enddate: date,
+        });
       }
     }
+
+  },
+
+  //이벤트 삭제
+  eventClick: function(calEvent, jsEvent, view) {
+      var eventName = prompt("클릭하시면 해당 일정이 지워집니다."+
+      "\n정말 삭제하시려면 일정의 이름을 한번 더 입력하세요." +
+      "\n(참고: 제목이 없는 일정은 확인 또는 취소 버튼을 누르면 삭제됩니다.)");
+     if(eventName == calEvent.title){
+      alert( calEvent.title + " 일정이 삭제되었습니다!");
+      deleteEvent(calEvent.key, calEvent._id);
+     }
+     return;
   }
+
 
 });
 
