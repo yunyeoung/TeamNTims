@@ -139,3 +139,83 @@
 [debug] [2018-12-11T06:43:14.708Z] <<< HTTP RESPONSE 200
 [info] i  hosting: Serving hosting files from: ./
 [info] +  hosting: Local server: http://localhost:5000
+[debug] [2018-12-13T09:09:52.203Z] ----------------------------------------------------------------------
+[debug] [2018-12-13T09:09:52.208Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\dbsdu\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js serve --only hosting
+[debug] [2018-12-13T09:09:52.209Z] CLI Version:   6.0.1
+[debug] [2018-12-13T09:09:52.209Z] Platform:      win32
+[debug] [2018-12-13T09:09:52.209Z] Node Version:  v10.13.0
+[debug] [2018-12-13T09:09:52.234Z] Time:          Thu Dec 13 2018 18:09:52 GMT+0900 (GMT+09:00)
+[debug] [2018-12-13T09:09:52.235Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2018-12-13T09:09:52.281Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2018-12-13T09:09:52.283Z] > authorizing via signed-in user
+[debug] [2018-12-13T09:09:52.283Z] [iam] checking project friendlychat-39754 for permissions ["firebase.projects.get"]
+[debug] [2018-12-13T09:09:52.287Z] > refreshing access token with scopes: ["email","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","openid"]
+[debug] [2018-12-13T09:09:52.288Z] >>> HTTP REQUEST POST https://www.googleapis.com/oauth2/v3/token  
+ <request body omitted>
+[debug] [2018-12-13T09:10:00.330Z] <<< HTTP RESPONSE 200
+[debug] [2018-12-13T09:10:00.340Z] >>> HTTP REQUEST POST https://cloudresourcemanager.googleapis.com/v1/projects/friendlychat-39754:testIamPermissions  
+
+[debug] [2018-12-13T09:10:32.713Z] Error: Client network socket disconnected before secure TLS connection was established
+    at TLSSocket.onConnectEnd (_tls_wrap.js:1086:19)
+    at Object.onceWrapper (events.js:273:13)
+    at TLSSocket.emit (events.js:187:15)
+    at TLSSocket.EventEmitter.emit (domain.js:442:20)
+    at endReadableNT (_stream_readable.js:1094:12)
+    at process._tickCallback (internal/process/next_tick.js:63:19)
+[error] 
+[error] Error: Server Error. Client network socket disconnected before secure TLS connection was established
+[debug] [2018-12-13T09:12:05.499Z] ----------------------------------------------------------------------
+[debug] [2018-12-13T09:12:05.503Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\dbsdu\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js serve --only hosting
+[debug] [2018-12-13T09:12:05.503Z] CLI Version:   6.0.1
+[debug] [2018-12-13T09:12:05.503Z] Platform:      win32
+[debug] [2018-12-13T09:12:05.503Z] Node Version:  v10.13.0
+[debug] [2018-12-13T09:12:05.507Z] Time:          Thu Dec 13 2018 18:12:05 GMT+0900 (GMT+09:00)
+[debug] [2018-12-13T09:12:05.507Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2018-12-13T09:12:05.531Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2018-12-13T09:12:05.532Z] > authorizing via signed-in user
+[debug] [2018-12-13T09:12:05.532Z] [iam] checking project friendlychat-39754 for permissions ["firebase.projects.get"]
+[debug] [2018-12-13T09:12:05.537Z] >>> HTTP REQUEST POST https://cloudresourcemanager.googleapis.com/v1/projects/friendlychat-39754:testIamPermissions  
+
+[debug] [2018-12-13T09:12:07.070Z] <<< HTTP RESPONSE 200
+[debug] [2018-12-13T09:12:07.072Z] >>> HTTP REQUEST GET https://cloudresourcemanager.googleapis.com/v1/projects/friendlychat-39754  
+ 
+[debug] [2018-12-13T09:12:08.296Z] <<< HTTP RESPONSE 200
+[info] 
+[info] === Serving from 'C:\TeamNTims\TeamNTims'...
+[info] 
+[debug] [2018-12-13T09:12:08.300Z] >>> HTTP REQUEST GET https://mobilesdk-pa.googleapis.com/v1/projects/845309450876/clients/_:getWebAppConfig  
+ 
+[debug] [2018-12-13T09:12:09.250Z] <<< HTTP RESPONSE 200
+[info] i  hosting: Serving hosting files from: ./
+[info] +  hosting: Local server: http://localhost:5000
+[debug] [2018-12-14T13:37:03.239Z] ----------------------------------------------------------------------
+[debug] [2018-12-14T13:37:03.242Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\dbsdu\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js serve --only hosting
+[debug] [2018-12-14T13:37:03.242Z] CLI Version:   6.0.1
+[debug] [2018-12-14T13:37:03.242Z] Platform:      win32
+[debug] [2018-12-14T13:37:03.242Z] Node Version:  v10.13.0
+[debug] [2018-12-14T13:37:03.245Z] Time:          Fri Dec 14 2018 22:37:03 GMT+0900 (GMT+09:00)
+[debug] [2018-12-14T13:37:03.245Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2018-12-14T13:37:03.276Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2018-12-14T13:37:03.278Z] > authorizing via signed-in user
+[debug] [2018-12-14T13:37:03.278Z] [iam] checking project friendlychat-39754 for permissions ["firebase.projects.get"]
+[debug] [2018-12-14T13:37:03.280Z] > refreshing access token with scopes: ["email","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","openid"]
+[debug] [2018-12-14T13:37:03.281Z] >>> HTTP REQUEST POST https://www.googleapis.com/oauth2/v3/token  
+ <request body omitted>
+[debug] [2018-12-14T13:37:03.701Z] <<< HTTP RESPONSE 200
+[debug] [2018-12-14T13:37:03.710Z] >>> HTTP REQUEST POST https://cloudresourcemanager.googleapis.com/v1/projects/friendlychat-39754:testIamPermissions  
+
+[debug] [2018-12-14T13:37:04.624Z] <<< HTTP RESPONSE 200
+[debug] [2018-12-14T13:37:04.624Z] >>> HTTP REQUEST GET https://cloudresourcemanager.googleapis.com/v1/projects/friendlychat-39754  
+ 
+[debug] [2018-12-14T13:37:05.537Z] <<< HTTP RESPONSE 200
+[info] 
+[info] === Serving from 'C:\TeamNTims\TeamNTims'...
+[info] 
+[debug] [2018-12-14T13:37:05.541Z] >>> HTTP REQUEST GET https://mobilesdk-pa.googleapis.com/v1/projects/845309450876/clients/_:getWebAppConfig  
+ 
+[debug] [2018-12-14T13:37:06.692Z] <<< HTTP RESPONSE 200
+[info] i  hosting: Serving hosting files from: ./
+[info] +  hosting: Local server: http://localhost:5000

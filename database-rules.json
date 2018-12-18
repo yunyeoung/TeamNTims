@@ -19,6 +19,10 @@
     "users" : {
       ".read" : true,
       ".write": true
+    },
+    "calendar":{
+      ".read": true,
+      ".write": true
     }
   }
 }
