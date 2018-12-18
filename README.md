@@ -149,7 +149,6 @@ fileButtonElement를 클릭했을 때 현재 이벤트의 기본 동작을 중�
 ```
 
 * saveFileMessage함수. file을 입력받았을 시에 /messages 참조의해당 roomId참조 밑에 message format에 fileUrl과 filename을 더해 firebase database에 저장한다. fileUrl은 firebase storage에 업로드 한 후 snapshot을 통해 넘겨받는다. 
-<-이부분 설명 괜찮나유ㅠㅠ
 
 ```javascript
 	// Saves a new message containing an image in Firebase.
@@ -195,8 +194,8 @@ displayMessage 메소드 안에서 filename 을 인자로 받았을 때, message
 위젯을 추가하여 실시간 사용자 수를 확인할 수 있다.   
  [WhosAmungUs](https://whos.amung.us/)
 
-#### main.js
-```javascript
+#### first.html
+```html
 	<br> current attendance
             <center> <script id="_waue06">
             var _wau = _wau || []; _wau.push(["small", "sxz5miudyq", "e06"]);</script>
@@ -334,6 +333,72 @@ event의 설정 값을 변수로 묶고 'renderEvent'를 통해 calendar에 찍�
 
 ### 7. user list 확인
 ***
+* 사용자가 로그인 했을 때 사용자의 정보를 firebase database에 저장한 후 모든 유저를 listing 한다.
+#### 7.1 유저 정보 저장
+
+* SignIn 함수 안에 위치한다. popup창이 뜨며 signin한 후 saveUserAtRealDB 함수를 호출한다.
+
+```javascript
+	firebase.auth().signInWithPopup(provider).then(function(){
+ 	   saveUserAtRealDB(); 
+ 	 });
+```
+
+* saveUserAtRealDB
+firebase database의 /user 참조 아래에 useruid 참조를 만든 후 아래에 해당 유저 정보를 저장한다.
+
+```javascript
+	function saveUserAtRealDB(){
+ 	 var database = firebase.database(); //database reference
+ 	 var useruid = firebase.auth().currentUser.uid; //get current user uid
+ 	 var userRef = firebase.database().ref('/users/'+useruid); //database reference where save user data
+ 	 return userRef.set({
+ 	   useruid: useruid,
+ 	   name: getUserName(),
+ 	   email: getUserEmail(),
+ 	   profilePicUrl: getProfilePicUrl()
+ 	   }).catch(function(error) {
+ 	   console.error('Error writing new user to Firebase Database', error);
+ 	 });
+	}
+```
+
+#### 7.2 유저 정보 리스팅
+
+* loadUserList
+유저정보를 불러온다. firebase databse 의 /user참조 아래에 child가 더해지거나 변화가 생기면 callback 호출한다. callback 안에서는 datasnapshot을 찍어 displayUser을 호출하며 넘겨준다.
+
+```javascript
+	function loadUserList(){
+ 	 var callback = function(snap){
+ 	   var data = snap.val();
+ 	   displayUser(snap.key, data.name, data.profilePicUrl, data.email);
+	  firebase.database().ref('/users/').on('child_added', callback);
+	  firebase.database().ref('/users/').on('child_changed', callback);
+	}
+```
+
+* displayUser
+html에 유저정보를 찍어주는 element를 만들어 유저 리스팅
+
+```javascript
+	function displayUser(key, name, picUrl, email){
+ 	 var div = document.getElementById(key);
+	  // If an element for that user does not exists yet we create it.
+	  if (!div) {
+	    var container = document.createElement('div');
+	    container.innerHTML = USERLIST_TEMPLATE;
+	    div = container.firstChild;
+	    div.setAttribute('id', key);
+	    userListElement.appendChild(div);
+	  }
+	  if (picUrl) {
+	    div.querySelector('.pic').style.backgroundImage = 'url(' + picUrl + ')';
+	  }
+	  div.querySelector('.username').textContent = name;
+	  // div.querySelector('.email').textContent = email;
+	}
+```
 
 ### 8. 기능과 관계 없는 UI 수정
 ***
