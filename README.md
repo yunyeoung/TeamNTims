@@ -15,6 +15,76 @@ College student team project chat program
 ### 2. 로그인 기능  
 ***
 
+>기존 friendly-chat은 로그인을 하지 않아도 채팅 내역을 볼 수 있다. 그 부분에 대해 다른 창에 로그인 기능을 분리하여 로그인 해야만 채팅방 입장 버튼이 생기고, 입장을 할 수 있도록 한다.
+
+##### 2.1 구글 로그인/로그아웃 버튼 추가   
+
+##### index.html
+
+로그인 로그아웃 화면 추가
+
+```html
+	<div id="user-container" style="text-align:center; padding:300px 0 0 0">
+            <div hidden id="user-pic"></div>
+            <div hidden id="user-name"></div>
+            <button hidden id="sign-out" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-color-text--white">Sign-out
+            </button>
+            <button hidden id="sign-in" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-color-text--white">
+              <i class="material-icons">account_circle</i>Sign-in with Google
+            </button>
+          </div>
+```
+
+##### login.js
+
+로그인 기능 구현
+
+```javascript
+	function signIn() {
+  var provider = new firebase.auth.GoogleAuthProvider();
+  firebase.auth().signInWithPopup(provider).then(function(){
+    saveUserAtRealDB(); 
+  });
+}
+```
+
+로그아웃 기능 구현
+
+
+```javascript
+	function signOut() {
+  firebase.auth().signOut();
+}
+```
+
+##### 2.2 login 이후 채팅창 참여 버튼 생성
+
+##### index.html
+
+버튼을 누르면 first.html로 연결되도록 구현
+
+```html
+<button id="login"
+   class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-color-text--orange-200" 
+   onclick="location.href='/first.html'">
+    enter to chat room
+  </button>
+```
+
+##### login.js
+
+로그인 하면 입장버튼 만들기
+
+```javascript  
+    loginButtonElement.removeAttribute('hidden');
+```
+
+로그아웃 상태일 때 입장 버튼 지우기
+
+```javascript
+    loginButtonElement.setAttribute('hidden','true');
+```
+
 ### 3. 파일 업로드 및 다운로드 기능  
 ***
 #### 3.1 파일 업로드 
@@ -50,7 +120,7 @@ fileButtonElement를 클릭했을 때 현재 이벤트의 기본 동작을 중�
 	});
 ```
 
-fileCaptureElement는 input 필드와 연결되어 있다. 파일이 선택되어 fileCaptureElement가 변할 때 onFileSelected 호출 <-이부분 설명 괜찮나요??
+fileCaptureElement는 input 필드와 연결되어 있다. 파일이 선택되어 fileCaptureElement가 변할 때 onFileSelected 호출
 
 ```javascript
 	fileCaptureElement.addEventListener('change', onFileSelected);
@@ -121,8 +191,17 @@ displayMessage 메소드 안에서 filename 을 인자로 받았을 때, message
 
 ### 4. 현재 접속자 확인
 ***
--https://whos.amung.us/
-실시간 접속자 수 위젯 이거 사용하신것 같아요
+
+위젯을 추가하여 실시간 사용자 수를 확인할 수 있다.   
+ [WhosAmungUs](https://whos.amung.us/)
+
+#### main.js
+```javascript
+	<br> current attendance
+            <center> <script id="_waue06">
+            var _wau = _wau || []; _wau.push(["small", "sxz5miudyq", "e06"]);</script>
+            <script async src="//waust.at/s.js"></script> </center>
+```
 
 ### 5. 회의 알람 기능
 ***
