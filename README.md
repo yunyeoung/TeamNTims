@@ -586,7 +586,7 @@ See [LICENSE](https://github.com/yunyeoung/TeamNTims/blob/right/LICENSE) , Apach
     index.html, indexstyle.css 첫 로그인 전 페이지 구현   
     login.js 이용하여 로그인 기능 구현   
     first.html, main.js  main.css로 기본 채팅 구현      
-    이벤트 display 오류 수정
+    이벤트 display 오류 수정     
  
     * 최종발표   
     readme 작성
@@ -599,8 +599,8 @@ See [LICENSE](https://github.com/yunyeoung/TeamNTims/blob/right/LICENSE) , Apach
     first.html, main.js  main.css로 기본 채팅 구현   
     main.js 이용해 user list, chatting list 구현   
     first.html로 채팅방 UI 구분   
-    first.html main.js 수정하여 calender 기능 추가
-    파일 올리기 기능 추가
+    first.html main.js 수정하여 calender 기능 추가     
+    파일 올리기 기능 추가      
     
 
     * 최종발표   
@@ -623,7 +623,7 @@ See [LICENSE](https://github.com/yunyeoung/TeamNTims/blob/right/LICENSE) , Apach
     first.html index.html에 팀 로고 추가   
     first.html main.js 수정하여 동접자 위젯 추가     
     fullCalendar을 이용해 출석체크 기능 구현    
-    html, css 파일들 수정하여 전체적인 UI 담당     
+    html, css 파일들 전체적인 UI 수정       
     일정 삭제 기능 일부 수정     
 
     * 최종발표   
