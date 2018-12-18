@@ -12,6 +12,264 @@ College student team project chat program
 ### 1. 기본 채팅  
 ***
 
+>firebase database를 이용하여 메시지 및 사진을 주고받을 수 있는 기능이다.
+
+#### 1.1 메시지 전송
+
+##### first.html
+ 
+ * 메시지 입력 폼 및 버튼 추가
+ 
+ ```html
+	<form id="message-form" action="#">
+           <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+              <input class="mdl-textfield__input" type="text" id="message">
+                 <label class="mdl-textfield__label" for="message">Message...</label>
+           </div>
+           <button id="submit" disabled type="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">
+           Send
+           </button>
+        </form>
+```
+
+##### main.js
+
+* first.html의 element에 id로 접근하는 변수 생성
+
+```javascript
+	var messageFormElement = document.getElementById('message-form');
+	var messageInputElement = document.getElementById('message');
+	var submitButtonElement = document.getElementById('submit');
+```
+
+* element에 eventlistner 추가
+
+```javascript
+	// Saves message on form submit.
+	messageFormElement.addEventListener('submit', onMessageFormSubmit);
+	// Toggle for the button.
+	messageInputElement.addEventListener('keyup', toggleButton);
+	messageInputElement.addEventListener('change', toggleButton);
+```
+messageInputElement 의 input이 변하거나, 글자수가 변하였을때도 toggleButton 실행.                    
+
+* onMessageFormSubmit. 새로운 메시지를 전송하였을때 실행되는 함수. 메시지가 입력되었는지, 유저가 sign-in 상태인지 확인한 후 saveMessage 호출. 그 후 textfield를 비우고 toggleButton호출.
+
+```javascript
+	// Triggered when the send new message form is submitted.
+	function onMessageFormSubmit(e) {
+ 	 e.preventDefault();
+	  // Check that the user entered a message and is signed in.
+	  if (messageInputElement.value && checkSignedInWithMessage()) {
+ 	   saveMessage(messageInputElement.value).then(function() {
+ 	     // Clear message text field and re-enable the SEND button.
+ 	     resetMaterialTextfield(messageInputElement);
+ 	     toggleButton();
+	    });
+	  }
+	}
+```
+
+* saveMessage. firebase database의 /messages 참조 아래에 해당 메시지를 형식에 맞게 저장한다.
+
+```javascript
+	// Saves a new message on the Firebase DB.
+	function saveMessage(messageText) {
+	  // Add a new message entry to the Firebase Database.
+	  return firebase.database().ref('/messages/').push({
+	    name: getUserName(),
+	    text: messageText,
+	    profilePicUrl: getProfilePicUrl()
+	  }).catch(function(error) {
+	    console.error('Error writing new message to Firebase Database', error);
+	  });
+	}
+```
+
+
+* toggleButton. input 메시지 있는지 확인 하여, 있으면 submitButtonElement의 disabled 속성 제거.
+
+```javascript
+	// Enables or disables the submit button depending on the values of the input fields.
+	function toggleButton() {
+	  if (messageInputElement.value) {
+	    submitButtonElement.removeAttribute('disabled');
+	  } else {
+	    submitButtonElement.setAttribute('disabled', 'true');
+	  }
+	}
+```
+
+#### 1.2 사진 전송
+##### first.html
+
+* 사진 입력 폼 추가
+
+```html
+	<form id="image-form" action="#">
+                <input id="mediaCapture" type="file" accept="image/*" capture="camera">
+                <button id="submitImage" title="Add an image" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-color--amber-400 mdl-color-text--white">
+                  <i class="material-icons">image</i>
+                </button>
+              </form>
+```
+
+##### main.js
+
+* first.html의 element에 id로 접근하는 변수 생성
+
+```javascript
+	var imageFormElement = document.getElementById('image-form');
+	var mediaCaptureElement = document.getElementById('mediaCapture');
+```
+
+* element에 eventlistner 추가                           
+imageButtonElement 를 click 하면 숨겨놓은 mediaCaptureElement 를 click하는 이벤트이다.                            
+mediaCaptureElement 의 input에 변화가 생기면 onMediaFileSelected 이벤트가 실행된다
+
+```javascript
+	// Events for image upload.
+	imageButtonElement.addEventListener('click', function(e) {
+	  e.preventDefault();
+ 	 mediaCaptureElement.click();
+	});
+	mediaCaptureElement.addEventListener('change', onMediaFileSelected);
+```
+
+* onMediaFileSelected. 올바른 이미지 파일인지, 사용자가 sign-in상태인지 체크한 후 saveImageMessage 호출.
+
+```javasctipt
+	// Triggered when a file is selected via the media picker.
+	function onMediaFileSelected(event) {
+ 	 event.preventDefault();
+ 	 var file = event.target.files[0];
+	
+	  // Clear the selection in the file picker input.
+	  imageFormElement.reset();
+	
+	  // Check if the file is an image.
+	  if (!file.type.match('image.*')) {
+	    var data = {
+	      message: 'You can only share images',
+	      timeout: 2000
+	    };
+	    signInSnackbarElement.MaterialSnackbar.showSnackbar(data);
+	    return;
+	  }
+	  // Check if the user is signed-in
+	  if (checkSignedInWithMessage()) {
+	    saveImageMessage(file);
+	  }
+	}
+```
+
+* saveImageMessage. 이미지 파일을 firebase database와 firebase storage에 형식에 맞게 저장한다.
+
+```javascript
+	// Saves a new message containing an image in Firebase.
+	// This first saves the image in Firebase storage.
+	function saveImageMessage(file) {
+	  // add a message with a loading icon that will get updated with the shared image.
+	  firebase.database().ref('/messages/').push({
+	    name: getUserName(),
+	    imageUrl: LOADING_IMAGE_URL,
+	    profilePicUrl: getProfilePicUrl()
+	  }).then(function(messageRef) {
+	    // Upload the image to Cloud Storage.
+	    var filePath = firebase.auth().currentUser.uid + '/' + messageRef.key + '/' + file.name;
+	    return firebase.storage().ref(filePath).put(file).then(function(fileSnapshot) {
+	      // Generate a public URL for the file.
+	      return fileSnapshot.ref.getDownloadURL().then((url) => {
+	        // Update the chat message placeholder with the image's URL.
+	        return messageRef.update({
+	          imageUrl: url,
+	          storageUri: fileSnapshot.metadata.fullPath
+	        });
+	      });
+	    });
+	  }).catch(function(error){
+	    console.error('there was an error uploading a file to Cloud Storage', error);
+	  });
+	}
+```
+
+#### 1.3 메시지 출력
+##### first.html
+
+* 메시지를 출력할 공간 추가
+
+```html
+	      <div id="messages">
+                <span id="message-filler"></span>
+              </div>
+```
+
+##### main.js
+
+* first.html의 element에 id로 접근하는 변수 생성
+
+```javascript
+	var messageListElement = document.getElementById('messages');
+```
+
+* loadMessage. firebase database의 /messages 참조 아래에 child가 변하거나 생기면 callback 호출.                   
+callback에서는 해당 참조의 datasnapshot을 찍어 값을 displayMessage를 호출하며 넘겨준다.
+
+```javascript
+	// Loads chat messages history and listens for upcoming ones.
+	function loadMessages() {
+	    // Loads the messages and listen for new ones.
+	    var callback = function(snap) {
+	      var data = snap.val();
+	      displayMessage(snap.key, data.name, data.text, data.profilePicUrl, data.imageUrl, data.fileUrl, data.filename);
+	    };
+	
+	    firebase.database().ref('/messages/').on('child_added', callback); //데이터베이스에 새로운 데이터 생기거나
+	    firebase.database().ref('/messages/').on('child_changed', callback); //변하는 것 가져와서 모든 대화 출력
+	}
+```
+
+* displayMessage. 메시지를 담을 element를 만든 후 형식에 맞게 출력한다.
+
+```javascript
+	// Displays a Message in the UI.
+	function displayMessage(key, name, text, picUrl, imageUrl, fileUrl, filename) {
+	  var div = document.getElementById(key);
+	  // If an element for that message does not exists yet we create it.
+	  if (!div) {
+	    var container = document.createElement('div');
+	    container.innerHTML = MESSAGE_TEMPLATE;
+	    div = container.firstChild;
+	    div.setAttribute('id', key);
+	    messageListElement.appendChild(div);
+	  }
+	  if (picUrl) {
+	    div.querySelector('.pic').style.backgroundImage = 'url(' + picUrl + ')';
+	  }
+	  div.querySelector('.name').textContent = name;
+	  var messageElement = div.querySelector('.message');
+	  if (text) { // If the message is text.
+	    messageElement.textContent = text;
+	    // Replace all line breaks by <br>.
+	    messageElement.innerHTML = messageElement.innerHTML.replace(/\n/g, '<br>');
+	  } else if (imageUrl) { // If the message is an image.
+	    var image = document.createElement('img');
+	    image.addEventListener('load', function() {
+	      messageListElement.scrollTop = messageListElement.scrollHeight;
+	    });
+	    image.src = imageUrl + '&' + new Date().getTime();
+	    messageElement.innerHTML = '';
+	    messageElement.appendChild(image);
+	  } else if(fileUrl){
+	      messageElement.innerHTML = '<a href="' +  fileUrl + '">'+filename+'</a>';
+	  }
+	  // Show the card fading-in and scroll to view the new message.
+	  setTimeout(function() {div.classList.add('visible')}, 1);
+	  messageListElement.scrollTop = messageListElement.scrollHeight;
+	  messageInputElement.focus();
+	}
+```
+
 ### 2. 로그인 기능  
 ***
 
