@@ -15,11 +15,81 @@ College student team project chat program
 ### 2. 로그인 기능  
 ***
 
+>기존 friendly-chat은 로그인을 하지 않아도 채팅 내역을 볼 수 있다. 그 부분에 대해 다른 창에 로그인 기능을 분리하여 로그인 해야만 채팅방 입장 버튼이 생기고, 입장을 할 수 있도록 한다.
+
+#### 2.1 구글 로그인/로그아웃 버튼 추가   
+
+##### index.html
+
+* 로그인 로그아웃 화면 추가
+
+```html
+	<div id="user-container" style="text-align:center; padding:300px 0 0 0">
+            <div hidden id="user-pic"></div>
+            <div hidden id="user-name"></div>
+            <button hidden id="sign-out" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-color-text--white">Sign-out
+            </button>
+            <button hidden id="sign-in" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-color-text--white">
+              <i class="material-icons">account_circle</i>Sign-in with Google
+            </button>
+          </div>
+```
+
+##### login.js
+
+* 로그인 기능 구현
+
+```javascript
+	function signIn() {
+  var provider = new firebase.auth.GoogleAuthProvider();
+  firebase.auth().signInWithPopup(provider).then(function(){
+    saveUserAtRealDB(); 
+  });
+}
+```
+
+* 로그아웃 기능 구현
+
+
+```javascript
+	function signOut() {
+  firebase.auth().signOut();
+}
+```
+
+#### 2.2 login 이후 채팅창 참여 버튼 생성
+
+##### index.html
+
+* 버튼을 누르면 first.html로 연결되도록 구현
+
+```html
+<button id="login"
+   class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-color-text--orange-200" 
+   onclick="location.href='/first.html'">
+    enter to chat room
+  </button>
+```
+
+##### login.js
+
+* 로그인 하면 입장버튼 만들기
+
+```javascript  
+    loginButtonElement.removeAttribute('hidden');
+```
+
+* 로그아웃 상태일 때 입장 버튼 지우기
+
+```javascript
+    loginButtonElement.setAttribute('hidden','true');
+```
+
 ### 3. 파일 업로드 및 다운로드 기능  
 ***
 #### 3.1 파일 업로드 
 ##### first.html
-파일 입력 받는 폼 추가
+* 파일 입력 받는 폼 추가
 
 ```html
 	<form id="file-form" action="#">
@@ -30,7 +100,7 @@ College student team project chat program
 ```
 
 ##### main.js
-first.html의 id에 접근하도록 변수 생성
+* first.html의 id에 접근하도록 변수 생성
 
 ```javascript
 	var fileButtonElement = document.getElementById('submitFile');
@@ -38,7 +108,7 @@ first.html의 id에 접근하도록 변수 생성
 	var fileCaptureElement = document.getElementById('fileCapture');
 ```
 
-element에 listner 추가
+* element에 listner 추가
 fileButtonElement를 클릭했을 때 현재 이벤트의 기본 동작을 중단하고 filreCaptureElement를 클릭하는 메소드
 	
 ```javascript
@@ -50,13 +120,13 @@ fileButtonElement를 클릭했을 때 현재 이벤트의 기본 동작을 중�
 	});
 ```
 
-fileCaptureElement는 input 필드와 연결되어 있다. 파일이 선택되어 fileCaptureElement가 변할 때 onFileSelected 호출 <-이부분 설명 괜찮나요??
+* fileCaptureElement는 input 필드와 연결되어 있다. 파일이 선택되어 fileCaptureElement가 변할 때 onFileSelected 호출
 
 ```javascript
 	fileCaptureElement.addEventListener('change', onFileSelected);
 ```
 
-onFileSelected 함수. 파일이 선택된 후 file변수에 해당 파일을 저장한 후 다음에 있을 파일 선택을 위해 file picker을 비우고 유저가 sign-in상태이면 saveFileMessage에 file을 넘겨주며 호출한다.
+* onFileSelected 함수. 파일이 선택된 후 file변수에 해당 파일을 저장한 후 다음에 있을 파일 선택을 위해 file picker을 비우고 유저가 sign-in상태이면 saveFileMessage에 file을 넘겨주며 호출한다.
 
 ```javascript
 	// Triggered when a file is selected via the media picker.
@@ -78,7 +148,7 @@ onFileSelected 함수. 파일이 선택된 후 file변수에 해당 파일을 �
 	}
 ```
 
-saveFileMessage함수. file을 입력받았을 시에 /messages 참조의해당 roomId참조 밑에 message format에 fileUrl과 filename을 더해 firebase database에 저장한다. fileUrl은 firebase storage에 업로드 한 후 snapshot을 통해 넘겨받는다. 
+* saveFileMessage함수. file을 입력받았을 시에 /messages 참조의해당 roomId참조 밑에 message format에 fileUrl과 filename을 더해 firebase database에 저장한다. fileUrl은 firebase storage에 업로드 한 후 snapshot을 통해 넘겨받는다. 
 <-이부분 설명 괜찮나유ㅠㅠ
 
 ```javascript
@@ -121,8 +191,17 @@ displayMessage 메소드 안에서 filename 을 인자로 받았을 때, message
 
 ### 4. 현재 접속자 확인
 ***
--https://whos.amung.us/
-실시간 접속자 수 위젯 이거 사용하신것 같아요
+
+위젯을 추가하여 실시간 사용자 수를 확인할 수 있다.   
+ [WhosAmungUs](https://whos.amung.us/)
+
+#### main.js
+```javascript
+	<br> current attendance
+            <center> <script id="_waue06">
+            var _wau = _wau || []; _wau.push(["small", "sxz5miudyq", "e06"]);</script>
+            <script async src="//waust.at/s.js"></script> </center>
+```
 
 ### 5. 회의 알람 기능
 ***
@@ -144,12 +223,13 @@ calendar가 들어갈 페이지의 head부분에 위의 dependency load 문장�
 
 #### 6.2 calendar 생성
 ##### first.html
+* 캘린더 추가   
 ```html
 	  <div id="calendar">
           </div> 
 ```
 ##### main.js
-jquery를 사용하여 달력 생성한 후 기본 설정
+* jquery를 사용하여 달력 생성한 후 기본 설정
 
 ```javascript
 	$(function() {
@@ -170,7 +250,7 @@ jquery를 사용하여 달력 생성한 후 기본 설정
 
 #### 6.3 event 추가
 ##### main.js
-calendar을 생성한 jqery 안에 button을 추가하는 코드 추가한 후 클릭했을시 발생하는 메소드 정의.
+* calendar을 생성한 jqery 안에 button을 추가하는 코드 추가한 후 클릭했을시 발생하는 메소드 정의.
 'add event'이름의 버튼을 클릭했을 때 start date와 end date, title을 차례로 입력하면 firebase database의 calendar 아래에 저장.
 
 ```javascript
@@ -194,7 +274,7 @@ calendar을 생성한 jqery 안에 button을 추가하는 코드 추가한 후 �
  	 }
 ```
 
-채팅에 입장하였을때 calendar에 저장된 event를 불러오는 함수이다
+* 채팅에 입장하였을때 calendar에 저장된 event를 불러오는 함수이다
 firebase database의 calendar 참조 아래에 child가 더해지거나 변경되면 callback을 호출한다
 callback안에서는 데이터의 snapshot을 찍어 값을 displayEvent을 호출하며 넘겨준다
 
@@ -209,7 +289,7 @@ callback안에서는 데이터의 snapshot을 찍어 값을 displayEvent을 호�
 	}
 ```
 
-firebase database에서 받아온 값을 calendar에 찍어주는 메소드이다
+* firebase database에서 받아온 값을 calendar에 찍어주는 메소드이다
 event의 설정 값을 변수로 묶고 'renderEvent'를 통해 calendar에 찍어준다.
 
 ```javascript
@@ -230,7 +310,7 @@ event의 설정 값을 변수로 묶고 'renderEvent'를 통해 calendar에 찍�
 	
 #### 6.4 event 삭제
 ##### main.js
-calendar을 생성한 jqery 안에 현재 calendar에 저장된 event를 클릭했을 때 일어나는 메소드 정의.
+* calendar을 생성한 jqery 안에 현재 calendar에 저장된 event를 클릭했을 때 일어나는 메소드 정의.
 이벤트가 삭제됨을 알리는 경고창을 띄운 후 deleteEvent메소드를 호출하며 현재 event의 key에 저장된 값과 id값을 넘겨준다.
 
 ```javascript
@@ -240,7 +320,7 @@ calendar을 생성한 jqery 안에 현재 calendar에 저장된 event를 클릭�
  		}
 ```
 
-deleteEvent 메소드에서는 firebase database의 calendar 참조 아래에 넘겨받은 event의 key 값과 같은 참조를 찾아 삭제한 후
+* deleteEvent 메소드에서는 firebase database의 calendar 참조 아래에 넘겨받은 event의 key 값과 같은 참조를 찾아 삭제한 후
 'removeEvents'를 통해 해당 event를 calendar에서 삭제한다.
 
 ```javascript
@@ -255,47 +335,25 @@ deleteEvent 메소드에서는 firebase database의 calendar 참조 아래에 �
 ### 7. user list 확인
 ***
 
-### 8. 전체 UI 수정
+### 8. 기능과 관계 없는 UI 수정
 ***
 #### 8.1 index.html
 
-어플리케이션의 로고를 입력하는 코드
+* 어플리케이션의 로고를 입력하는 코드
  
 ```html
 	<div style="text-align:center; padding:200px 0 0 0"><img src="images/tNtLogo.png"/></div>
 ```
 
-구글 로그인 버튼, 그림 추가
+#### 8.2 first.html
 
-```html
-	<div id="user-container" style="text-align:center; padding:300px 0 0 0">
-            <div hidden id="user-pic"></div>
-            <div hidden id="user-name"></div>
-            <button hidden id="sign-out" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-color-text--white">Sign-out
-            </button>
-            <button hidden id="sign-in" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-color-text--white">
-              <i class="material-icons">account_circle</i>Sign-in with Google
-            </button>
-        </div>
-```
-
-채팅방 입장 버튼 구현
-
-```html
-	<button id="login"
-	class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-color-text--orange-200" 
-	onclick="location.href='/first.html'">
-	  enter to chat room
-	</button>
-```
-#### 8.2 index.html
-
-사용 오픈 소스
+사용 오픈 소스 및 위젯
 ==============
 - firebase
 - fullcalendar https://fullcalendar.io/ 
-- fullcalendar는 MIT licence인데 라이센스 두개 작성이 안되네용,,,
-- 
+- WhosAmungUs https://whos.amung.us/
+
+
 
 앱 설치 방법 및 사용법
 ==============
@@ -309,8 +367,7 @@ deleteEvent 메소드에서는 firebase database의 calendar 참조 아래에 �
 ===============
 
 See [LICENSE](https://github.com/yunyeoung/TeamNTims/blob/right/LICENSE) , Apache License 2.0
-
-개발자 정보 
+ 
 =============
 
 - 1415020 김채윤 cyoonkim  
