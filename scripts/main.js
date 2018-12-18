@@ -400,8 +400,7 @@ function deleteEvent(eventKey, eventId){
 
 }
 
-// Enables or disables the submit button depending on the values of the input
-// fields.
+// Enables or disables the submit button depending on the values of the input fields.
 function toggleButton() {
   if (messageInputElement.value) {
     submitButtonElement.removeAttribute('disabled');
