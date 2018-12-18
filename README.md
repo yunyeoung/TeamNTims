@@ -443,15 +443,16 @@ html에 유저정보를 찍어주는 element를 만들어 유저 리스팅
 * UI 추가 html 코드
 
 ```html
-<div id="extra_container" class="mdl-cell mdl-cell--5-col">
-                today's meeting time alarm
-                <form name=exf1>
-                    <B>현재시간 :</B>
-                    <input type=text name=ch size=2>시 <input type=text name=cm size=2>분 <input type=text name=cs size=2>초<br />
-                    <B>회의시간 :</B>
-                    <input type=text name=h size=2>시 <input type=text name=m size=2>분 <input type=text name=s size=2>초<br />
-                    <input type=button name=b onclick=setAlarm() value="Set Alarm">     <input type=button name=r onclick=clearAlarm() value="Turn Alarm Off"><BR>
-                </form>
+            <strong style="font-size: 17px"> today's meeting time alarm </strong> <br>
+          <form name=exf1>
+              <B>현재시간 :</B>
+              <input type=text name=ch size=2>시 <input type=text name=cm size=2>분 <input type=text name=cs size=2>초<br />
+              <B>회의시간 :</B>
+              <input type=text name=h size=2>시 <input type=text name=m size=2>분 <input type=text name=s size=2>초<br />
+              <br>
+              <input type=button name=b onclick=setAlarm() value="Set Alarm">     <input type=button name=r onclick=clearAlarm() value="Turn Alarm Off"><BR>
+          </form>
+
 ```
 
 * 알람 울리기 기능 추가
