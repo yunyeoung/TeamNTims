@@ -1,4 +1,4 @@
-College student team project chat program
+﻿College student team project chat program
 =============
 
 대학생 팀프로젝트 채팅 프로그램 "팀앤팀즈(TeamNTims)"  
@@ -518,7 +518,7 @@ See [LICENSE](https://github.com/yunyeoung/TeamNTims/blob/right/LICENSE) , Apach
     일정 삭제 기능 수정
 
     * 최종발표   
-    데모 영상 촬영
+    데모 영상 시나리오 작성
 
 - 1771012 김수영 Sooyyoungg  
     * 중간발표   
@@ -528,4 +528,5 @@ See [LICENSE](https://github.com/yunyeoung/TeamNTims/blob/right/LICENSE) , Apach
     first.html 수정하여 당일날 알림 구현
 
     * 최종발표   
-    데모영상 촬영
+    데모영상 촬영, 동영상 편집
+
