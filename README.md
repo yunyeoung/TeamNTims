@@ -1,4 +1,4 @@
-﻿College student team project chat program
+College student team project chat program
 =============
 
 대학생 팀프로젝트 채팅 프로그램 "팀앤팀즈(TeamNTims)"  
@@ -194,9 +194,10 @@ displayMessage 메소드 안에서 filename 을 인자로 받았을 때, message
 	messageElement.innerHTML = '<a href="' +  fileUrl + '">'+filename+'</a>';
 ```
 
-### 4. 현재 접속자 확인 
+### 4. 현재 접속자 확인
 ***
-위젯을 추가하여 실시간 사용자 수를 확인할 수 있다.   
+
+* 위젯을 추가하여 실시간 사용자 수를 확인할 수 있다.   
  [WhosAmungUs](https://whos.amung.us/)
 
 #### first.html
@@ -207,14 +208,11 @@ displayMessage 메소드 안에서 filename 을 인자로 받았을 때, message
             <script async src="//waust.at/s.js"></script>
 ```
 
-### 5. 회의 알람 기능
+### 5. 일정 관리 기능
 ***
+>일정을 함께 공유해야 하기 때문에 calendar에 일정을 표시함과 동시에 firebase database에 저장하여 공유할 수 있도록 구현하였다
 
-### 6. 일정 관리 기능
-***
-일정을 함께 공유해야 하기 때문에 calendar에 일정을 표시함과 동시에 firebase database에 저장하여 공유할 수 있도록 구현하였다
-
-#### 6.1 fullcalendar 사용 준비
+#### 5.1 fullcalendar 사용 준비
 ##### first.html
 calendar가 들어갈 페이지의 head부분에 위의 dependency load 문장을 작성
 
@@ -225,7 +223,7 @@ calendar가 들어갈 페이지의 head부분에 위의 dependency load 문장�
   	<script src='fullcalendar/fullcalendar.js'></script>
 ```
 
-#### 6.2 calendar 생성
+#### 5.2 calendar 생성
 ##### first.html
 * 캘린더 추가   
 ```html
@@ -252,7 +250,7 @@ calendar가 들어갈 페이지의 head부분에 위의 dependency load 문장�
 	}
 ```
 
-#### 6.3 event 추가
+#### 5.3 event 추가
 ##### main.js
 * calendar을 생성한 jqery 안에 button을 추가하는 코드 추가한 후 클릭했을시 발생하는 메소드 정의.
 'add event'이름의 버튼을 클릭했을 때 start date와 end date, title을 차례로 입력하면 firebase database의 calendar 아래에 저장.
@@ -312,7 +310,7 @@ event의 설정 값을 변수로 묶고 'renderEvent'를 통해 calendar에 찍�
 	}
 ```
 	
-#### 6.4 event 삭제
+#### 5.4 event 삭제
 ##### main.js
 * calendar을 생성한 jqery 안에 현재 calendar에 저장된 event를 클릭했을 때 일어나는 메소드 정의.
 이벤트가 삭제됨을 알리는 경고창을 띄운 후 deleteEvent메소드를 호출하며 현재 event의 key에 저장된 값과 id값을 넘겨준다.
@@ -334,15 +332,15 @@ event의 설정 값을 변수로 묶고 'renderEvent'를 통해 calendar에 찍�
 'removeEvents'를 통해 해당 event를 calendar에서 삭제한다.
 
 ```javascript
-	function deleteEvent(eventKey, eventId){
-	  console.log(eventKey);
-	  var database = firebase.database();
-	  var eventRef = firebase.database().ref('/calendar/').child(eventKey).remove();
-	  $('#calendar').fullCalendar('removeEvents',eventId);
-	}
+function deleteEvent(eventKey, eventId){
+	 console.log(eventKey);
+	 var database = firebase.database();
+	 var eventRef = firebase.database().ref('/calendar/').child(eventKey).remove();
+	 $('#calendar').fullCalendar('removeEvents',eventId);
+}
 ```
 
-#### 6.5 출석체크 기능
+#### 5.5 출석체크 기능
 
 calendar에 추가된 출석체크 기능을 사용하면 사용자의 유저ID와 기능을 사용한 현재시각을 calendar 일정에 추가한다.
 또한, 사용자에게는 출석체크가 성공적으로 이뤄졌다는 알림창을 표시한다.
@@ -368,10 +366,10 @@ calendar에 추가된 출석체크 기능을 사용하면 사용자의 유저ID�
     }
 ```
 
-### 7. user list 확인
+### 6. user list 확인
 ***
 * 사용자가 로그인 했을 때 사용자의 정보를 firebase database에 저장한 후 모든 유저를 listing 한다.
-#### 7.1 유저 정보 저장
+#### 6.1 유저 정보 저장
 
 * SignIn 함수 안에 위치한다. popup창이 뜨며 signin한 후 saveUserAtRealDB 함수를 호출한다.
 
@@ -400,7 +398,7 @@ firebase database의 /user 참조 아래에 useruid 참조를 만든 후 아래�
 	}
 ```
 
-#### 7.2 유저 정보 리스팅
+#### 6.2 유저 정보 리스팅
 
 * loadUserList
 유저정보를 불러온다. firebase databse 의 /user참조 아래에 child가 더해지거나 변화가 생기면 callback 호출한다. callback 안에서는 datasnapshot을 찍어 displayUser을 호출하며 넘겨준다.
@@ -437,21 +435,72 @@ html에 유저정보를 찍어주는 element를 만들어 유저 리스팅
 	}
 ```
 
+### 7. 당일 회의 알람 설정
+***
+
+##### first.html
+
+* UI 추가 html 코드
+
+```html
+<div id="extra_container" class="mdl-cell mdl-cell--5-col">
+                today's meeting time alarm
+                <form name=exf1>
+                    <B>현재시간 :</B>
+                    <input type=text name=ch size=2>시 <input type=text name=cm size=2>분 <input type=text name=cs size=2>초<br />
+                    <B>회의시간 :</B>
+                    <input type=text name=h size=2>시 <input type=text name=m size=2>분 <input type=text name=s size=2>초<br />
+                    <input type=button name=b onclick=setAlarm() value="Set Alarm">     <input type=button name=r onclick=clearAlarm() value="Turn Alarm Off"><BR>
+                </form>
+```
+
+* 알람 울리기 기능 추가
+
+```html
+<script>
+                        var alarmTimer = null;
+                        var alarmSet;
+                        function setAlarm()   { alarmSet = true;  }
+                        function clearAlarm() { alarmSet = false; }
+                        function initAlarm() {
+                            if (alarmTimer!=null)clearInterval(alarmTimer);
+                            var nowTime = new Date();
+                            clearAlarm();
+                            document.exf1.h.value = nowTime.getHours();
+                            document.exf1.m.value = nowTime.getMinutes();
+                            document.exf1.s.value = nowTime.getSeconds();
+                            alarmTimer=setInterval("countTime()",1000);
+                        }
+                        function matchH() { return (document.exf1.ch.value == document.exf1.h.value); }
+                        function matchM() { return (document.exf1.cm.value == document.exf1.m.value); }
+                        function matchS() { return (document.exf1.cs.value == document.exf1.s.value); }
+                        function countTime() {
+                            var nowTime = new Date();
+                            document.exf1.ch.value = nowTime.getHours();
+                            document.exf1.cm.value = nowTime.getMinutes();
+                            document.exf1.cs.value = nowTime.getSeconds();
+                            if (matchH() && matchM() && matchS()) {
+                                alert("회의 참석 시간입니다.");
+                            }
+                        }
+                        onload=initAlarm;
+                    </script>
+```
+
 ### 8. 기능과 관계 없는 UI 수정
 ***
-#### 8.1 index.html
+##### index.html
 
 * 어플리케이션의 로고를 입력하는 코드
  
 ```html
-	<div style="text-align:center; padding:200px 0 0 0"><img src="images/tNtLogo.png"/></div>
+<div style="text-align:center; padding:200px 0 0 0"><img src="images/tNtLogo.png"/></div>
 ```
 
-#### 8.2 first.html
 
 사용 오픈 소스 및 위젯
 ==============
-- firebase
+- firebase friendly-chat https://github.com/firebase/friendlychat-web
 - fullcalendar https://fullcalendar.io/ 
 - WhosAmungUs https://whos.amung.us/
 
@@ -463,13 +512,15 @@ html에 유저정보를 찍어주는 element를 만들어 유저 리스팅
 > TeamNTims는 웹 어플리케이션으로 별도의 설치 필요 없이 주소로 접속하시면 됩니다.   
 > [TeamNTims](https://friendlychat-39754.firebaseapp.com/)   
 > https://friendlychat-39754.firebaseapp.com/   
-> *****여기 이미지 추가 해야할 것 같아요!
+
+
 
 라이센스 정보
 ===============
 
 See [LICENSE](https://github.com/yunyeoung/TeamNTims/blob/right/LICENSE) , Apache License 2.0
- 
+
+개발자 정보
 =============
 
 - 1415020 김채윤 cyoonkim  
@@ -513,12 +564,9 @@ See [LICENSE](https://github.com/yunyeoung/TeamNTims/blob/right/LICENSE) , Apach
     * 개발   
     first.html index.html에 팀 로고 추가   
     index.html main.js 수정하여 동접자 위젯 추가
-    fullCalendar을 이용해 출석체크 기능 구현
-    전체적인 UI 담당
-    일정 삭제 기능 수정
 
     * 최종발표   
-    데모 영상 시나리오 작성
+    데모 영상 촬영
 
 - 1771012 김수영 Sooyyoungg  
     * 중간발표   
@@ -528,5 +576,4 @@ See [LICENSE](https://github.com/yunyeoung/TeamNTims/blob/right/LICENSE) , Apach
     first.html 수정하여 당일날 알림 구현
 
     * 최종발표   
-    데모영상 촬영, 동영상 편집
-
+    데모영상 촬영
