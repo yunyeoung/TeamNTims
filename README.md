@@ -738,7 +738,7 @@ html에 유저정보를 찍어주는 element를 만들어 유저 리스팅
                             document.exf1.ch.value = nowTime.getHours();
                             document.exf1.cm.value = nowTime.getMinutes();
                             document.exf1.cs.value = nowTime.getSeconds();
-                            if (matchH() && matchM() && matchS()) {
+                            if (matchH() && matchM() && matchS() && alarmSet) {
                                 alert("회의 참석 시간입니다.");
                             }
                         }
