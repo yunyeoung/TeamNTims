@@ -24,15 +24,19 @@ College student team project chat program
 * 로그인 로그아웃 화면 추가
 
 ```html
-	<div id="user-container" style="text-align:center; padding:300px 0 0 0">
-            <div hidden id="user-pic"></div>
-            <div hidden id="user-name"></div>
-            <button hidden id="sign-out" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-color-text--white">Sign-out
-            </button>
-            <button hidden id="sign-in" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-color-text--white">
-              <i class="material-icons">account_circle</i>Sign-in with Google
-            </button>
-          </div>
+<!-- 유저 정보 & 로그인, 로그아웃 -->
+  <center>
+    <!-- 유저 정보 표시 -->
+    <div hidden id="user-pic"></div>
+    <div hidden id="user-name" class="mdl-color-text--orange-200"></div>
+
+    <!-- 계정 로그인 & 로그아웃 버튼 -->
+    <button hidden id="sign-out" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-color-text--white">Sign-out
+    </button>
+    <button hidden id="sign-in" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-color-text--white">
+      <i class="material-icons">account_circle</i>Sign-in with Google
+    </button>
+  </center>
 ```
 
 ##### login.js
@@ -64,11 +68,13 @@ College student team project chat program
 * 버튼을 누르면 first.html로 연결되도록 구현
 
 ```html
-<button id="login"
-   class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-color-text--orange-200" 
-   onclick="location.href='/first.html'">
-    enter to chat room
-  </button>
+  <!-- 입장 버튼 -->
+  <p align="center">
+    <button id="login" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-color-text--orange-200"
+      onclick="location.href='/first.html'">
+      ENTER TO CHAT ROOM
+    </button>
+  </p>
 ```
 
 ##### login.js
@@ -188,18 +194,17 @@ displayMessage 메소드 안에서 filename 을 인자로 받았을 때, message
 	messageElement.innerHTML = '<a href="' +  fileUrl + '">'+filename+'</a>';
 ```
 
-### 4. 현재 접속자 확인
+### 4. 현재 접속자 확인 
 ***
-
 위젯을 추가하여 실시간 사용자 수를 확인할 수 있다.   
  [WhosAmungUs](https://whos.amung.us/)
 
 #### first.html
 ```html
-	<br> current attendance
-            <center> <script id="_waue06">
-            var _wau = _wau || []; _wau.push(["small", "sxz5miudyq", "e06"]);</script>
-            <script async src="//waust.at/s.js"></script> </center>
+ 	<strong style="font-size: 15px">현재 인원수</strong>
+            <script id="_waue06">
+              var _wau = _wau || []; _wau.push(["small", "sxz5miudyq", "e06"]);</script>
+            <script async src="//waust.at/s.js"></script>
 ```
 
 ### 5. 회의 알람 기능
@@ -313,10 +318,16 @@ event의 설정 값을 변수로 묶고 'renderEvent'를 통해 calendar에 찍�
 이벤트가 삭제됨을 알리는 경고창을 띄운 후 deleteEvent메소드를 호출하며 현재 event의 key에 저장된 값과 id값을 넘겨준다.
 
 ```javascript
-	eventClick: function(calEvent, jsEvent, view) {
-      		alert('Event: ' + calEvent.title + "is deleted!");
-   		deleteEvent(calEvent.key, calEvent._id);
- 		}
+    eventClick: function (calEvent, jsEvent, view) {
+      var eventName = prompt("클릭하시면 해당 일정이 지워집니다." +
+        "\n정말 삭제하시려면 일정의 이름을 한번 더 입력하세요." +
+        "\n(참고: 제목이 없는 일정은 확인 또는 취소 버튼을 누르면 삭제됩니다.)");
+      if (eventName == calEvent.title) {
+        alert(calEvent.title + " 일정이 삭제되었습니다!");
+        deleteEvent(calEvent.key, calEvent._id);
+      }
+      return;
+    }
 ```
 
 * deleteEvent 메소드에서는 firebase database의 calendar 참조 아래에 넘겨받은 event의 key 값과 같은 참조를 찾아 삭제한 후
@@ -329,6 +340,30 @@ event의 설정 값을 변수로 묶고 'renderEvent'를 통해 calendar에 찍�
 	  var eventRef = firebase.database().ref('/calendar/').child(eventKey).remove();
 	  $('#calendar').fullCalendar('removeEvents',eventId);
 	}
+```
+
+#### 6.5 출석체크 기능
+### main.js
+calendar에 추가된 출석체크 기능을 사용하면 사용자의 유저ID와 기능을 사용한 현재시각을 calendar 일정에 추가한다.
+또한, 사용자에게는 출석체크가 성공적으로 이뤄졌다는 알림창을 표시한다.
+
+```javascript
+    attendanceCheck: {
+      text: '출석체크',
+      id: 'check',
+      click: function(){
+        var calendarRef = firebase.database().ref('/calendar/');
+       var userName = firebase.auth().currentUser.displayName;
+        var date = $('#calendar').fullCalendar('getDate').format();
+        alert(userName+"님 출석체크 완료!\n"+"( "+date+" )");
+
+          return calendarRef.push({
+          title: userName+" 출석",
+          startdate: date,
+          enddate: date,
+        });
+      }
+    }
 ```
 
 ### 7. user list 확인
@@ -372,7 +407,7 @@ firebase database의 /user 참조 아래에 useruid 참조를 만든 후 아래�
 	function loadUserList(){
  	 var callback = function(snap){
  	   var data = snap.val();
- 	   displayUser(snap.key, data.name, data.profilePicUrl, data.email);
+ 	   displayUser(snap.key, data.name + " 님");
 	  firebase.database().ref('/users/').on('child_added', callback);
 	  firebase.database().ref('/users/').on('child_changed', callback);
 	}
@@ -476,6 +511,9 @@ See [LICENSE](https://github.com/yunyeoung/TeamNTims/blob/right/LICENSE) , Apach
     * 개발   
     first.html index.html에 팀 로고 추가   
     index.html main.js 수정하여 동접자 위젯 추가
+    fullCalendar을 이용해 출석체크 기능 구현
+    전체적인 UI 담당
+    일정 삭제 기능 수정
 
     * 최종발표   
     데모 영상 촬영
