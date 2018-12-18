@@ -343,9 +343,11 @@ event의 설정 값을 변수로 묶고 'renderEvent'를 통해 calendar에 찍�
 ```
 
 #### 6.5 출석체크 기능
-### main.js
+
 calendar에 추가된 출석체크 기능을 사용하면 사용자의 유저ID와 기능을 사용한 현재시각을 calendar 일정에 추가한다.
 또한, 사용자에게는 출석체크가 성공적으로 이뤄졌다는 알림창을 표시한다.
+
+##### main.js
 
 ```javascript
     attendanceCheck: {
