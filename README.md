@@ -514,6 +514,60 @@ html에 유저정보를 찍어주는 element를 만들어 유저 리스팅
 > [TeamNTims](https://friendlychat-39754.firebaseapp.com/)   
 > https://friendlychat-39754.firebaseapp.com/   
 
+#### * 채팅방에 들어가 로그인을 합니다. 
+###### (Log in to chat room) 
+
+      
+<div>
+<img src="https://user-images.githubusercontent.com/40933818/50160744-63836080-031d-11e9-9a3b-c7111564f410.PNG" width="500">
+<img src="https://user-images.githubusercontent.com/40933818/50160746-64b48d80-031d-11e9-985d-153060afb2dd.PNG" width=200">
+</div>
+<img src="https://user-images.githubusercontent.com/40933818/50160754-6716e780-031d-11e9-8776-ab14835d56a1.PNG" width="500">
+
+#### * 팀원들과 채팅과 파일 공유를 할 수 있습니다.
+###### (Chat and share files with team members)
+
+<img src="https://user-images.githubusercontent.com/40933818/50161483-464f9180-031f-11e9-862d-30874c731e9f.PNG" width="400">
+
+#### * 이 팀플에 참여한 사람과, 현재 접속자 수를 알 수 있습니다.   
+###### (You can see the number of people who participated in this team, and the number of current members
+
+<img src="https://user-images.githubusercontent.com/40933818/50161725-e86f7980-031f-11e9-995d-86deb65d0540.PNG" width="200">
+
+
+#### * 일정을 관리할 수 있습니다. 회의시간에 출석을 체크할 수 있습니다.
+###### (You can manage your team schedule. Can check attendance at meeting time.)
+
+일정을 month 단위 week 단위로 확인할 수 있습니다.     
+
+<div>
+<img src="https://user-images.githubusercontent.com/40933818/50162288-4c467200-0321-11e9-9354-891e80b66364.PNG" width="400">
+<img src="https://user-images.githubusercontent.com/40933818/50162289-4d779f00-0321-11e9-9161-2cc15ec49b45.PNG" width="400">
+</div>
+
+일정을 추가합니다.    
+
+<div>
+<img src="https://user-images.githubusercontent.com/40933818/50162436-b6f7ad80-0321-11e9-8db9-c3d258c32db2.PNG" width="300">
+<img src="https://user-images.githubusercontent.com/40933818/50162440-b95a0780-0321-11e9-9b77-0699fe4028b1.PNG" width="300">
+<img src="https://user-images.githubusercontent.com/40933818/50162445-bb23cb00-0321-11e9-97a3-9a45e6a53231.PNG" width="300">
+</div>
+
+일정이 추가된 걸 볼 수 있습니다.   
+<img src="https://user-images.githubusercontent.com/40933818/50162672-4309d500-0322-11e9-8ae8-e1835f1517ed.PNG" width="500">
+   
+   
+     
+일정을 삭제합니다.
+
+<img src="https://user-images.githubusercontent.com/40933818/50162683-469d5c00-0322-11e9-9bf1-8a4962b4d781.PNG" width="300">
+
+
+#### * 회의 시간 알람을 설정할 수 있습니다.
+###### (You can set the meeting time alarm on the day.)
+
+<img src="https://user-images.githubusercontent.com/40933818/50161850-35535000-0320-11e9-80fa-9568090fb5ee.PNG" width="300">
+
 
 
 라이센스 정보
@@ -531,7 +585,8 @@ See [LICENSE](https://github.com/yunyeoung/TeamNTims/blob/right/LICENSE) , Apach
     * 개발   
     index.html, indexstyle.css 첫 로그인 전 페이지 구현   
     login.js 이용하여 로그인 기능 구현   
-    first.html, main.js  main.css로 기본 채팅 구현  
+    first.html, main.js  main.css로 기본 채팅 구현      
+    이벤트 display 오류 수정
  
     * 최종발표   
     readme 작성
@@ -544,7 +599,9 @@ See [LICENSE](https://github.com/yunyeoung/TeamNTims/blob/right/LICENSE) , Apach
     first.html, main.js  main.css로 기본 채팅 구현   
     main.js 이용해 user list, chatting list 구현   
     first.html로 채팅방 UI 구분   
-    first.html main.js 수정하여 calender 기능 추가   
+    first.html main.js 수정하여 calender 기능 추가
+    파일 올리기 기능 추가
+    
 
     * 최종발표   
     readme 작성
