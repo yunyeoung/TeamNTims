@@ -303,7 +303,7 @@ event의 설정 값을 변수로 묶고 'renderEvent'를 통해 calendar에 찍�
 	          title: title,
  	          allDay: true,
  	          start: moment(startdate),
-   	          end: moment(enddate),
+   	          end: moment(enddate).add('days',1),
   	          key: key
  	         };
  	         if(moment(startdate).isValid()){
