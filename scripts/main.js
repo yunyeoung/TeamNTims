@@ -384,7 +384,7 @@ function displayEvent(key, title, startdate, enddate){
             title: title,
             allDay: true,
             start: moment(startdate),
-            end: moment(enddate),
+            end: moment(enddate).add('days',1),
             key: key
           };
           if(moment(startdate).isValid()){
