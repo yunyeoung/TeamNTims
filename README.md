@@ -562,8 +562,13 @@ See [LICENSE](https://github.com/yunyeoung/TeamNTims/blob/right/LICENSE) , Apach
     소스조사, ppt 세부내용 작성
 
     * 개발   
-    first.html index.html에 팀 로고 추가   
-    index.html main.js 수정하여 동접자 위젯 추가
+    first.html index.html에 팀 로고, 동접자 위젯 추가
+    
+    fullCalendar 이용해 출석체크 기능 구현
+    
+   전체적인 UI 수정
+    
+   일정 삭제 기능 일부 수정
 
     * 최종발표   
     데모 영상 촬영
