@@ -3,12 +3,10 @@
     "messages": {
       ".read": true,
       ".write": "auth !== null",
-      "$roomId" : {
-        "$messageId": {
-          ".validate": "newData.child('name').val() === auth.token.name",
-          "text": {
-            ".validate": "newData.isString() && newData.val().length < 300"
-          }
+      "$messageId": {
+        ".validate": "newData.child('name').val() === auth.token.name",
+        "text": {
+           ".validate": "newData.isString() && newData.val().length < 300"
         }
       }
     },
