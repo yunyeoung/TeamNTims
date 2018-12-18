@@ -141,14 +141,19 @@
         </div>
 
             <div id="extra_container" class="mdl-cell mdl-cell--5-col">
-                today's meeting time alarm
-                <form name=exf1>
-                    <B>현재시간 :</B>
-                    <input type=text name=ch size=2>시 <input type=text name=cm size=2>분 <input type=text name=cs size=2>초<br />
-                    <B>회의시간 :</B>
-                    <input type=text name=h size=2>시 <input type=text name=m size=2>분 <input type=text name=s size=2>초<br />
-                    <input type=button name=b onclick=setAlarm() value="Set Alarm">     <input type=button name=r onclick=clearAlarm() value="Turn Alarm Off"><BR>
-                </form>
+               
+                <div id="calendar-card"
+                     class="mdl-card mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-cell--8-col-tablet mdl-cell--12-col-desktop">
+                    <div id="calendar">
+                    </div>
+                    today's meeting time alarm
+                    <form name=exf1>
+                        <B>현재시간 :</B>
+                        <input type=text name=ch size=2>시 <input type=text name=cm size=2>분 <input type=text name=cs size=2>초<br />
+                        <B>회의시간 :</B>
+                        <input type=text name=h size=2>시 <input type=text name=m size=2>분 <input type=text name=s size=2>초<br />
+                        <input type=button name=b onclick=setAlarm() value="Set Alarm">     <input type=button name=r onclick=clearAlarm() value="Turn Alarm Off"><BR>
+                    </form>
 
                     <script>
                     <!--
@@ -180,11 +185,7 @@
                         onload=initAlarm;
                      //-->
                     </script>
-                <div id="calendar-card" 
-                class="mdl-card mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-cell--8-col-tablet mdl-cell--12-col-desktop">
-                <div id="calendar">
-                  </div> 
-            </div>
+                </div>
     </div>
     
     </div>
