@@ -4,7 +4,9 @@ College student team project chat program
 대학생 팀프로젝트 채팅 프로그램 "팀앤팀즈(TeamNTims)"  
 -------------
 
->기존 협업 툴은 회사원들을 위해 개발되어있다. 대학생 팀프로젝트의 목적에 맞춰 기능을 제공하고, 최고의 협업을 돕기 위하고자 하는 웹 메신저이다. 채팅기능, 파일 업로드 및 다운로드, 현재접속자 확인, 회의알람 기능, 일정관리 기능 등을 갖추고 있다.
+>기존 협업 툴은 회사원들을 위해 개발되어있다. 대학생 팀프로젝트의 목적에 맞춰 기능을 제공하고, 최고의 협업을 돕기 위하고자 하는 웹 메신저이다. 채팅기능, 파일 업로드 및 다운로드, 현재접속자 확인, 회의알람 기능, 일정관리 기능 등을 갖추고 있다.                                         
+> 시연 동영상 https://www.youtube.com/watch?v=4z3ulgb0DWI&feature=youtu.be                                            
+
 
 채팅 주요 기능
 ============
@@ -770,9 +772,7 @@ html에 유저정보를 찍어주는 element를 만들어 유저 리스팅
 
 > TeamNTims는 웹 어플리케이션으로 별도의 설치 필요 없이 주소로 접속하시면 됩니다.   
 > [TeamNTims](https://friendlychat-39754.firebaseapp.com/)   
-> https://friendlychat-39754.firebaseapp.com/                  
-> 시연 동영상  https://www.youtube.com/watch?v=4z3ulgb0DWI&feature=youtu.be                                        
-
+> https://friendlychat-39754.firebaseapp.com/                                                        
 
 #### * 채팅방에 들어가 로그인을 합니다. 
 ###### (Log in to chat room) 
