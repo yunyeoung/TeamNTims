@@ -770,7 +770,9 @@ html에 유저정보를 찍어주는 element를 만들어 유저 리스팅
 
 > TeamNTims는 웹 어플리케이션으로 별도의 설치 필요 없이 주소로 접속하시면 됩니다.   
 > [TeamNTims](https://friendlychat-39754.firebaseapp.com/)   
-> https://friendlychat-39754.firebaseapp.com/   
+> https://friendlychat-39754.firebaseapp.com/                  
+> 시연 동영상  https://www.youtube.com/watch?v=4z3ulgb0DWI&feature=youtu.be                                        
+
 
 #### * 채팅방에 들어가 로그인을 합니다. 
 ###### (Log in to chat room) 
